@@ -1,0 +1,19 @@
+{
+  "name": "quick-list",
+  "version": "1.0.0",
+  "description": "Create a shopping wishlist seamlessly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonymjimenez/quicklist.git"
+  },
+  "author": "Anthony Jimenez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anthonymjimenez/quicklist/issues"
+  },
+  "homepage": "https://github.com/anthonymjimenez/quicklist#readme"
+}
