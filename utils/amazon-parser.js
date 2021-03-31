@@ -1,14 +1,16 @@
 var DomParser = require("dom-parser");
 var parser = new DomParser();
 const fetch = require("node-fetch");
-const { urls } = require("./fetchTest");
 
-const parseFromAmazon = (url) => {
-  var dom = parser.parseFromString(html);
-  // hopefully we can create multi protocols
-  // let parser = functionThatTakesDomAndDeterminesParser(dom)
-  return { ...amazonParser(dom), url: url };
-};
+const parseFromAmazon = ({ url }) =>
+  fetch(url)
+    .then((html) => html.text())
+    .then((html) => {
+      var dom = parser.parseFromString(html);
+      // hopefully we can create multi protocols
+      // let parser = functionThatTakesDomAndDeterminesParser(dom)
+      return { ...amazonParser(dom), url: url };
+    });
 
 const grabAndMapByTag = (dom, html) => (tag) =>
   dom.getElementsByTagName(tag).map((m) => m[html]);
@@ -19,6 +21,8 @@ const amazonParser = (dom) => {
   var domInner = grabAndMapByTag(dom, "innerHTML");
   var domByID = grabByID(dom);
 
+  console.log(domByID("feature-bullets"));
+  console.log(domInner("title"));
   var price = domByID("priceblock_ourprice")
     ? domByID("priceblock_ourprice").innerHTML
     : domByID("priceblock_dealprice")

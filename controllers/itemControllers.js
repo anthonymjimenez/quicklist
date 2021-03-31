@@ -1,4 +1,5 @@
 // create and require model
+let { parseFromAmazon } = require("../utils/amazon-parser");
 
 exports.getItems = async (req, res, next) => {
   return res.status(200).json({
@@ -8,7 +9,8 @@ exports.getItems = async (req, res, next) => {
 };
 
 exports.postItems = async (req, res, next) => {
+  console.log(parseFromAmazon(req.body), 1);
   return res.status(200).json({
-    request: req.body,
+    request: await parseFromAmazon(req.body),
   });
 };
