@@ -1,6 +1,6 @@
 // create and require model
 let { parseFromAmazon } = require("../utils/amazon-parser");
-
+let { uniParser } = require("../utils/universal-parser");
 exports.getItems = async (req, res, next) => {
   return res.status(200).json({
     pinged: true,
@@ -9,8 +9,13 @@ exports.getItems = async (req, res, next) => {
 };
 
 exports.postItems = async (req, res, next) => {
-  console.log(parseFromAmazon(req.body), 1);
   return res.status(200).json({
     request: await parseFromAmazon(req.body),
+  });
+};
+
+exports.testUniversalItems = async (req, res, next) => {
+  return res.status(200).json({
+    request: await uniParser(req.body),
   });
 };
