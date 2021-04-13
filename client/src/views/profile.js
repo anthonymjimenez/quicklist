@@ -2,7 +2,8 @@
 
 import React from "react";
 
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import Loading from "../components/loading";
 
 const Profile = () => {
   const { user } = useAuth0();

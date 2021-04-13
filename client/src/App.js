@@ -6,6 +6,7 @@ import NavBar from "./components/nav-bar";
 import Loading from "./components/loading";
 import Footer from "./components/footer";
 import { Home, Profile, ExternalApi } from "./views";
+import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
   const { isLoading } = useAuth0();
@@ -20,8 +21,8 @@ const App = () => {
       <div className="container flex-grow-1">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/external-api" component={ExternalApi} />
+          <ProtectedRoute path="/profile" component={Profile} />
+          <ProtectedRoute path="/external-api" component={ExternalApi} />
         </Switch>
       </div>
       <Footer />
