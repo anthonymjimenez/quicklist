@@ -21,8 +21,6 @@ const amazonParser = (dom) => {
   var domInner = grabAndMapByTag(dom, "innerHTML");
   var domByID = grabByID(dom);
 
-  console.log(domByID("feature-bullets"));
-  console.log(domInner("title"));
   var price = domByID("priceblock_ourprice")
     ? domByID("priceblock_ourprice").innerHTML
     : domByID("priceblock_dealprice")
