@@ -3,10 +3,10 @@ const router = express.Router();
 const {
   getItems,
   postItems,
-  testUniversalItems,
+  publicItems,
 } = require("../controllers/itemControllers");
 const { checkJwt } = require("../utils/checkJwt");
 
 router.route("/").get(getItems).post(postItems);
-router.route("/test").post(testUniversalItems);
+router.route("/test").post(publicItems);
 module.exports = router;
