@@ -2,7 +2,7 @@ var DomParser = require("dom-parser");
 var parser = new DomParser();
 const fetch = require("node-fetch");
 
-const parseFromAmazon = ({ url }) =>
+const parseFromAmazon = (url) =>
   fetch(url)
     .then((html) => html.text())
     .then((html) => {
@@ -58,6 +58,9 @@ const amazonParser = (dom) => {
     image: image,
     description: description,
     category: category,
+    logo: "https://www.amazon.com/favicon.ico",
+    hostname: "https://www.amazon.com",
+    availability: true,
   };
 };
 

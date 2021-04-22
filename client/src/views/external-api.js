@@ -19,7 +19,6 @@ const ExternalApi = () => {
   };
 
   const callSecureApi = async () => {
-    // need to auth backend
     try {
       console.log(serverUrl);
       const token = await getAccessTokenSilently();

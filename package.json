@@ -30,11 +30,15 @@
     "metascraper": "^5.21.4",
     "metascraper-description": "^5.21.4",
     "metascraper-image": "^5.21.4",
+    "metascraper-logo": "^5.21.5",
+    "metascraper-logo-favicon": "^5.21.5",
     "metascraper-title": "^5.21.4",
     "metascraper-url": "^5.21.4",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.5",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "url-parse": "^1.5.1",
+    "valid-url": "^1.0.9"
   }
 }

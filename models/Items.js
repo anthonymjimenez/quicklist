@@ -11,6 +11,24 @@ const ItemsSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
+  availability: {
+    //
+    type: Boolean,
+  },
+  image: {
+    type: String,
+  },
+  lo: {
+    //
+    type: String,
+  },
+  hostname: {
+    //
+    type: String,
+  },
+  url: {
+    type: String,
+  },
   createdBy: {
     type: String,
   },
