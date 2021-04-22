@@ -18,7 +18,7 @@ const ItemsSchema = new mongoose.Schema({
   image: {
     type: String,
   },
-  lo: {
+  logo: {
     //
     type: String,
   },

@@ -1,15 +1,16 @@
 let { parseFromAmazon } = require("../utils/amazon-parser");
 let { uniParser } = require("../utils/universal-parser");
+let { filterByUser } = require("../utils/users");
 let Item = require("../models/Items");
 let Url = require("url-parse");
 var validUrl = require("valid-url");
 
-exports.getItems = async (req, res, next) => {
-  const items = await Item.find();
+exports.getItems = async ({ query: { user } }, res, next) => {
+  const userItems = filterByUser(await Item.find(), user);
   return res.status(200).json({
     pinged: true,
-    results: items,
-    count: items.length,
+    results: userItems,
+    count: userItems.length,
   });
 };
 
@@ -31,7 +32,7 @@ exports.postItems = async ({ body: { url, user_id } }, res, next) => {
       ...parsedRequest,
       createdBy: user_id,
     });
-
+    newItem.save();
     return res.status(200).json({
       completed: true,
       results: newItem,

@@ -51,9 +51,8 @@ const amazonParser = (dom) => {
         .getElementsByClassName("a-color-tertiary")[0]
         .innerHTML.trim()
     : "";
-
   return {
-    price: price,
+    price: parseFloat(price.slice(1)),
     title: title,
     image: image,
     description: description,
