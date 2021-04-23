@@ -8,6 +8,7 @@ import ErrorReducer from "../Errors/ErrorReducer";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const initialState = {
+  publicItem: {},
   items: [],
   loading: true,
 };
@@ -33,27 +34,30 @@ export const ItemProvider = ({ children }) => {
       type: "CLEAR_ERRORS",
     });
   }
-  async function getItems() {
+  async function getItems(sub) {
     try {
       const token = await getAccessTokenSilently();
-      const response = await fetch(`${serverUrl}/api/v1/items`, {
+      const response = await fetch(`${serverUrl}/api/v1/items?user=${sub}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      const responseData = await response.json();
+      console.log(responseData);
+
       dispatch({
         type: "GET_ITEMS",
-        payload: { items: response.data.results },
+        payload: { items: response.results },
       });
     } catch (error) {
-      returnErrors(error.response.data.error, error.response.data.status);
+      // returnErrors(error.response.data.error, error.response.data.status);
       console.error(error);
     }
   }
   return (
     <ItemContext.Provider
       value={{
-        calorieEvents: state.calorieEvents,
+        items: state.items,
         itemError: errState,
         loading: state.loading,
         getItems,
