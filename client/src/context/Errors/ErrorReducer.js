@@ -1,4 +1,4 @@
-export default (state, action) => {
+const ErrorReducer = (state, action) => {
   if (action.type === "GET_ERRORS") {
     return {
       message: action.payload.message,
@@ -15,3 +15,5 @@ export default (state, action) => {
     return state;
   }
 };
+
+export default ErrorReducer;

@@ -6,10 +6,8 @@ import { errorState } from "../Errors/ErrorContext";
 import ErrorReducer from "../Errors/ErrorReducer";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-const { getAccessTokenSilently } = useAuth0();
 
 const initialState = {
-  token: getAccessTokenSilently,
   items: [],
   loading: true,
 };
@@ -17,6 +15,8 @@ const initialState = {
 export const ItemContext = createContext(initialState);
 
 export const ItemProvider = ({ children }) => {
+  const { getAccessTokenSilently } = useAuth0();
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [state, dispatch] = useReducer(ItemReducer, initialState);
   const [errState, errDispatch] = useReducer(ErrorReducer, errorState);
 
@@ -35,13 +35,18 @@ export const ItemProvider = ({ children }) => {
   }
   async function getItems() {
     try {
-      const response = await axios.get("http:/localhost:8080/items");
+      const token = await getAccessTokenSilently();
+      const response = await fetch(`${serverUrl}/api/v1/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       dispatch({
-        type: "GET_CALORIEEVENTS",
+        type: "GET_ITEMS",
         payload: { items: response.data.results },
       });
     } catch (error) {
-      // returnErrors(error.response.data.error, error.response.data.status);
+      returnErrors(error.response.data.error, error.response.data.status);
       console.error(error);
     }
   }
