@@ -54,13 +54,28 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
+
+  async function getPublicItem() {
+    try {
+      const response = await fetch(`${serverUrl}/api/v1/items/test`);
+      const responseData = await response.json();
+      dispatch({
+        type: "GET_PUBLIC_ITEM",
+        payload: { items: response.results },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <ItemContext.Provider
       value={{
         items: state.items,
         itemError: errState,
         loading: state.loading,
+        publicItem: state.publicItem,
         getItems,
+        getPublicItem,
       }}
     >
       {children}

@@ -6,6 +6,12 @@ const ItemReducer = (state, action) => {
         loading: false,
         items: action.payload,
       };
+    case "GET_PUBLIC_ITEM":
+      return {
+        ...state,
+        loading: false,
+        publicItem: action.payload,
+      };
     default:
       return state;
   }
