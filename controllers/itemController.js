@@ -1,7 +1,7 @@
 let { parseFromAmazon } = require("../utils/amazon-parser");
 let { uniParser } = require("../utils/universal-parser");
 let { filterByUser } = require("../utils/users");
-let Item = require("../models/Items");
+let Item = require("../models/Item");
 let Url = require("url-parse");
 var validUrl = require("valid-url");
 
@@ -16,6 +16,7 @@ exports.getItems = async ({ query: { user } }, res, next) => {
 
 exports.postItems = async ({ body: { url, user_id } }, res, next) => {
   try {
+    console.log(validUrl.isUri(url));
     if (!validUrl.isUri(url)) {
       return res.status(400).json({
         error: true,
@@ -35,6 +36,8 @@ exports.postItems = async ({ body: { url, user_id } }, res, next) => {
     });
 
     newItem.save();
+    // add Categories to Item & add Item to Categories .findByIdAndUpdate
+
     return res.status(200).json({
       completed: true,
       results: newItem,
@@ -47,8 +50,10 @@ exports.postItems = async ({ body: { url, user_id } }, res, next) => {
   // });
 };
 
-exports.publicItems = async ({ body: { url, user_id } }, res, next) => {
+exports.publicItems = async ({ body: { url } }, res, next) => {
   try {
+    console.log(url);
+
     if (!validUrl.isUri(url)) {
       return res.status(400).json({
         error: true,

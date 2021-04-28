@@ -43,11 +43,11 @@ export const ItemProvider = ({ children }) => {
         },
       });
       const responseData = await response.json();
-      console.log(responseData);
-
+      console.log("response", responseData);
+      console.log("token", token);
       dispatch({
         type: "GET_ITEMS",
-        payload: { items: response.results },
+        payload: { items: responseData.results },
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
@@ -61,7 +61,7 @@ export const ItemProvider = ({ children }) => {
       const responseData = await response.json();
       dispatch({
         type: "GET_PUBLIC_ITEM",
-        payload: { items: response.results },
+        payload: { items: responseData.results },
       });
     } catch (error) {
       console.error(error);

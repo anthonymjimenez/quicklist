@@ -15,7 +15,7 @@ const ItemList = () => {
 
   return (
     <>
-      {console.log(items)}
+      {console.log("items", items)}
       {/* {items.map((item) => (
         <Item item={item} />
       ))} */}
