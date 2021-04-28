@@ -5,37 +5,24 @@ const ItemsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  description: {
-    type: String,
-  },
-  price: {
-    type: Number,
-  },
-  availability: {
-    //
-    type: Boolean,
-  },
-  image: {
-    type: String,
-  },
-  logo: {
-    //
-    type: String,
-  },
-  hostname: {
-    //
-    type: String,
-  },
-  url: {
-    type: String,
-  },
-  createdBy: {
-    type: String,
-  },
+  description: String,
+  price: Number,
+  availability: Boolean,
+  image: String,
+  logo: String,
+  hostname: String,
+  url: String,
+  categories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
+  createdBy: String,
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("Items", ItemsSchema);
+module.exports = mongoose.model("Item", ItemsSchema);

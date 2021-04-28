@@ -5,16 +5,18 @@ const CategorySchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  items: {
-    type: Array,
-  },
-  createdBy: {
-    type: String,
-  },
+  items: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Items",
+    },
+  ],
+  createdBy: String,
+
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("Categories", CategorySchema);
+module.exports = mongoose.model("Category", CategorySchema);
