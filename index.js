@@ -21,8 +21,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/api/v1/items", require("./routes/items"));
-
+app.use("/api/v1/items", require("./routes/item"));
+app.use("/api/v1/categories", require("./routes/category"));
 // start the server
 app.listen(port, function () {
   console.log(`app started on port ${port}`);
