@@ -22,6 +22,12 @@ exports.getItems = async ({ query: { user } }, res, next) => {
     count: userItems.length,
   });
 };
+exports.getItemCategories = async ({ params: { id } }, res) => {
+  return res.status(200).json({
+    pinged: true,
+    results: await Item.findById(id).populate("categories"),
+  });
+};
 
 exports.postItem = async (
   { body: { url, user_id, categories } },
@@ -46,14 +52,14 @@ exports.postItem = async (
       ...parsedRequest,
       createdBy: user_id,
     });
-    var item = "";
+    var item = newItem;
     newItem.save();
 
     await asyncForEach(categories, async (categoryId) => {
       await addItemToCategory(categoryId, newItem._id);
-      item = (await addCategoryToItem(newItem._id, categoryId)).toJSON();
+      item = await addCategoryToItem(newItem._id, categoryId);
     });
-    // add Categories to Item & add Item to Categories .findByIdAndUpdate
+
     return res.status(200).json({
       completed: true,
       results: item,

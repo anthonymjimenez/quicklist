@@ -1,11 +1,18 @@
 let Category = require("../models/Category");
-
-exports.getCategories = async ({ query: { user } }, res, next) => {
+let { filterByUser } = require("../utils/users");
+exports.getCategoryItems = async ({ query: { user } }, res, next) => {
   const userCategories = filterByUser(await Category.find(), user);
-  return res.status(200).json({
-    pinged: true,
-    results: userCategories,
-    count: userCategories.length,
+  let pop = async () =>
+    Promise.all(
+      userCategories.map(({ _id }) => Category.findById(_id).populate("items"))
+    );
+
+  pop().then((categories) => {
+    return res.status(200).json({
+      pinged: true,
+      results: categories,
+      count: userCategories.length,
+    });
   });
 };
 
