@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getCategories,
   postCategory,
-} = require("../controllers/itemController");
+} = require("../controllers/categoryController");
 const { checkJwt } = require("../utils/checkJwt");
 
 router.route("/").get(getCategories).post(postCategory);

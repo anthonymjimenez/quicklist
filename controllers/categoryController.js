@@ -5,14 +5,15 @@ exports.getCategories = async ({ query: { user } }, res, next) => {
   return res.status(200).json({
     pinged: true,
     results: userCategories,
-    count: userItems.length,
+    count: userCategories.length,
   });
 };
 
-exports.postCategory = async ({ body: { user_id } }, res, next) => {
+exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
   try {
+    console.log(title, user_id);
     const newCategory = new Category({
-      ...body,
+      title,
       createdBy: user_id,
     });
 
@@ -24,7 +25,7 @@ exports.postCategory = async ({ body: { user_id } }, res, next) => {
       results: newCategory,
     });
   } catch (e) {
-    console.error(e);
+    return console.error(e);
   }
   // return res.status(200).json({
   //   request: await parseFromAmazon(req.body),

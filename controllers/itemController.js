@@ -1,10 +1,19 @@
-let { parseFromAmazon } = require("../utils/amazon-parser");
-let { uniParser } = require("../utils/universal-parser");
+let {
+  parsers: { parseFromAmazon, uniParser },
+} = require("../utils/parsers");
+let {
+  updateEntries: { addItemToCategory, addCategoryToItem },
+} = require("../utils/updateEntries");
 let { filterByUser } = require("../utils/users");
 let Item = require("../models/Item");
 let Url = require("url-parse");
 var validUrl = require("valid-url");
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 exports.getItems = async ({ query: { user } }, res, next) => {
   const userItems = filterByUser(await Item.find(), user);
   return res.status(200).json({
@@ -14,9 +23,12 @@ exports.getItems = async ({ query: { user } }, res, next) => {
   });
 };
 
-exports.postItems = async ({ body: { url, user_id } }, res, next) => {
+exports.postItem = async (
+  { body: { url, user_id, categories } },
+  res,
+  next
+) => {
   try {
-    console.log(validUrl.isUri(url));
     if (!validUrl.isUri(url)) {
       return res.status(400).json({
         error: true,
@@ -30,27 +42,31 @@ exports.postItems = async ({ body: { url, user_id } }, res, next) => {
         ? await parseFromAmazon(url)
         : await uniParser(url);
 
-    const newItem = new Item({
+    var newItem = new Item({
       ...parsedRequest,
       createdBy: user_id,
     });
-
+    var item = "";
     newItem.save();
-    // add Categories to Item & add Item to Categories .findByIdAndUpdate
 
+    await asyncForEach(categories, async (categoryId) => {
+      await addItemToCategory(categoryId, newItem._id);
+      item = (await addCategoryToItem(newItem._id, categoryId)).toJSON();
+    });
+    // add Categories to Item & add Item to Categories .findByIdAndUpdate
     return res.status(200).json({
       completed: true,
-      results: newItem,
+      results: item,
     });
   } catch (e) {
-    console.error(e);
+    return console.error(e);
   }
   // return res.status(200).json({
   //   request: await parseFromAmazon(req.body),
   // });
 };
 
-exports.publicItems = async ({ body: { url } }, res, next) => {
+exports.publicItem = async ({ body: { url } }, res, next) => {
   try {
     console.log(url);
 
@@ -76,9 +92,6 @@ exports.publicItems = async ({ body: { url } }, res, next) => {
       results: newItem,
     });
   } catch (e) {
-    console.error(e);
+    return console.error(e);
   }
-  // return res.status(200).json({
-  //   request: await parseFromAmazon(req.body),
-  // });
 };

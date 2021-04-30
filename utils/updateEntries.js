@@ -5,19 +5,21 @@ let Category = require("../models/Category");
 // create new Item and then map through category ids and execute addItemToCategory
 // Take newly created Item id and map through category id and execute addCategoryToItem
 
-const addItemToCategory = (categoryId, item) => {
+const addItemToCategory = (categoryId, itemId) => {
   return Category.findByIdAndUpdate(
     categoryId,
-    { $push: { items: item._id } },
+    { $push: { items: itemId } },
     { new: true, useFindAndModify: false }
   );
 };
 
-const addCategoryToItem = (itemId, category) => {
+const addCategoryToItem = (itemId, categoryId) => {
   return Item.findByIdAndUpdate(
     itemId,
-    { $push: { categories: category._id } },
+    { $push: { categories: categoryId } },
     { new: true, useFindAndModify: false }
   );
+
+  console.log(item);
 };
 exports.updateEntries = { addItemToCategory, addCategoryToItem };
