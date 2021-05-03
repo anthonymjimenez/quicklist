@@ -10,6 +10,7 @@ import ErrorReducer from "../Errors/ErrorReducer";
 const initialState = {
   publicItem: {},
   items: [],
+  categories: [],
   loading: true,
 };
 
@@ -37,16 +38,40 @@ export const ItemProvider = ({ children }) => {
   async function getItems(sub) {
     try {
       const token = await getAccessTokenSilently();
-      const response = await fetch(`${serverUrl}/api/v1/items?user=${sub}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${serverUrl}/api/v1/items?user=${sub}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const responseData = await response.json();
-      console.log("response", responseData);
-      console.log("token", token);
+
       dispatch({
         type: "GET_ITEMS",
+        payload: { items: responseData.results },
+      });
+    } catch (error) {
+      // returnErrors(error.response.data.error, error.response.data.status);
+      console.error(error);
+    }
+  }
+  async function getCategories(sub) {
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await axios.get(
+        `${serverUrl}/api/v1/categories?user=${sub}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseData = await response.json();
+
+      dispatch({
+        type: "GET_CATEGORIES",
         payload: { items: responseData.results },
       });
     } catch (error) {
@@ -57,7 +82,7 @@ export const ItemProvider = ({ children }) => {
 
   async function getPublicItem() {
     try {
-      const response = await fetch(`${serverUrl}/api/v1/items/test`);
+      const response = await axios.get(`${serverUrl}/api/v1/items/test`);
       const responseData = await response.json();
       dispatch({
         type: "GET_PUBLIC_ITEM",
@@ -67,6 +92,7 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
+
   return (
     <ItemContext.Provider
       value={{

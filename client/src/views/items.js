@@ -1,4 +1,4 @@
-import ItemList from "../containers/itemlist";
+import ItemList from "../containers/item-list";
 
 const Items = () => {
   return (

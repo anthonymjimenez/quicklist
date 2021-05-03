@@ -1,5 +1,6 @@
 let Category = require("../models/Category");
 let { filterByUser } = require("../utils/users");
+
 exports.getCategoryItems = async ({ query: { user } }, res, next) => {
   const userCategories = filterByUser(await Category.find(), user);
   let pop = async () =>

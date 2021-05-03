@@ -3,19 +3,18 @@ import Item from "../components/item";
 import React, { useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const ItemList = () => {
-  const { items, getItems } = useContext(ItemContext);
+const ItemPreviewList = () => {
+  const { categories, getCategories } = useContext(ItemContext);
   let {
     user: { sub },
   } = useAuth0();
   useEffect(() => {
-    getItems(sub);
-    console.log(0);
+    getCategories(sub);
   }, []);
 
   return (
     <>
-      {console.log("items", items)}
+      {console.log("items", categories)}
       {/* {items.map((item) => (
         <Item item={item} />
       ))} */}
@@ -23,4 +22,4 @@ const ItemList = () => {
   );
 };
 
-export default ItemList;
+export default ItemPreviewList;
