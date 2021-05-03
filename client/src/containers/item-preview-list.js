@@ -1,5 +1,5 @@
 import { ItemContext } from "../context/Items/ItemContext";
-import Item from "../components/item";
+import ItemPreview from "../components/item-preview";
 import React, { useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -14,10 +14,11 @@ const ItemPreviewList = () => {
 
   return (
     <>
-      {console.log("items", categories)}
-      {/* {items.map((item) => (
-        <Item item={item} />
-      ))} */}
+      Item Preview List
+      {console.log("cat", categories)}
+      {categories?.categories?.map((category) => (
+        <h5>{category.title}</h5>
+      ))}
     </>
   );
 };

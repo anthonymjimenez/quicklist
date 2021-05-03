@@ -68,11 +68,10 @@ export const ItemProvider = ({ children }) => {
           },
         }
       );
-      const responseData = await response.json();
 
       dispatch({
         type: "GET_CATEGORIES",
-        payload: { items: responseData.results },
+        payload: { categories: response.data.results },
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
@@ -97,11 +96,13 @@ export const ItemProvider = ({ children }) => {
     <ItemContext.Provider
       value={{
         items: state.items,
+        categories: state.categories,
         itemError: errState,
         loading: state.loading,
         publicItem: state.publicItem,
         getItems,
         getPublicItem,
+        getCategories,
       }}
     >
       {children}
