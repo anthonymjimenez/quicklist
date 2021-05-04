@@ -17,7 +17,7 @@ const CategoryList = () => {
       Item Preview List
       {console.log("cat", categories)}
       {categories?.map((category) => (
-        <h5>{category.title}</h5>
+        <CategoryPreview category={category} />
       ))}
     </>
   );

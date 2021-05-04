@@ -10,6 +10,19 @@ const ItemReducer = (state, action) => {
         ...state,
         publicItem: action.payload,
       };
+    case "POST_ITEM":
+      return {
+        ...state,
+        items: [action.payload, state.items],
+        categories: state.categories.map((category) => {
+          console.log("category", category, action.payload.categories);
+          if (action.payload.categories.includes(category._id)) {
+            console.log("PING");
+            category.items.push(action.payload);
+          }
+          return category;
+        }),
+      };
     case "GET_CATEGORIES":
       return {
         ...state,
@@ -18,7 +31,7 @@ const ItemReducer = (state, action) => {
     case "POST_CATEGORY":
       return {
         ...state,
-        categories: [...action.payload, state.categories],
+        categories: [action.payload, ...state.categories],
       };
     default:
       return state;

@@ -1,8 +1,9 @@
-const CategoryPreview = (item) => {
+const CategoryPreview = ({ category }) => {
   return (
     <>
-      Item
-      {item.stringify()}
+      <h1>{category.title}</h1>
+      {JSON.stringify(category, null, 2)}
+      <br />
     </>
   );
 };

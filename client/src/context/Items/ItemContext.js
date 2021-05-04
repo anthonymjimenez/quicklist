@@ -48,11 +48,10 @@ export const ItemProvider = ({ children }) => {
           },
         }
       );
-      const responseData = await response.json();
 
       dispatch({
         type: "GET_ITEMS",
-        payload: { items: responseData.results },
+        payload: response.data.result,
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
@@ -63,10 +62,32 @@ export const ItemProvider = ({ children }) => {
   async function getPublicItem() {
     try {
       const response = await axios.get(`${serverUrl}/api/v1/items/test`);
-      const responseData = await response.json();
       dispatch({
         type: "GET_PUBLIC_ITEM",
-        payload: { items: responseData.results },
+        payload: response.data.results,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function postItem(item) {
+    try {
+      console.log("HELLO");
+      const token = await getAccessTokenSilently();
+
+      const response = await axios.post(`${serverUrl}/api/v1/items`, {
+        ...item,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      });
+
+      console.log("hello", state.categories);
+      dispatch({
+        type: "POST_ITEM",
+        payload: response.data.results,
       });
     } catch (error) {
       console.error(error);
@@ -127,6 +148,7 @@ export const ItemProvider = ({ children }) => {
         getPublicItem,
         getCategories,
         postNewCategory,
+        postItem,
       }}
     >
       {children}

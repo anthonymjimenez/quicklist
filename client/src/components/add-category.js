@@ -10,11 +10,12 @@ const AddCategory = () => {
   let { postNewCategory } = useContext(ItemContext);
   let [title, setTitle] = useState("");
 
-  let post = () => {
+  let post = (e) => {
+    e.preventDefault();
     postNewCategory({ title: title, user_id: sub });
   };
   return (
-    <Form onSubmit={post}>
+    <Form onSubmit={(e) => post(e)}>
       {console.log(title)}
       <FormGroup>
         <Label for="title">Title</Label>
