@@ -10,7 +10,7 @@ const ItemForm = () => {
       <Nav tabs>
         <NavItem>
           <NavLink
-            className={activeTab == "1" ? "active" : ""}
+            className={activeTab === "1" ? "active" : ""}
             onClick={() => setActiveTab("1")}
           >
             Add Item
@@ -18,7 +18,7 @@ const ItemForm = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            className={activeTab == "2" ? "active" : ""}
+            className={activeTab === "2" ? "active" : ""}
             onClick={() => setActiveTab("2")}
           >
             Add QuickList

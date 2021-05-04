@@ -3,20 +3,22 @@ const ItemReducer = (state, action) => {
     case "GET_ITEMS":
       return {
         ...state,
-        loading: false,
         items: action.payload,
       };
     case "GET_PUBLIC_ITEM":
       return {
         ...state,
-        loading: false,
         publicItem: action.payload,
       };
     case "GET_CATEGORIES":
       return {
         ...state,
-        loading: false,
         categories: action.payload,
+      };
+    case "POST_CATEGORY":
+      return {
+        ...state,
+        categories: [...action.payload, state.categories],
       };
     default:
       return state;

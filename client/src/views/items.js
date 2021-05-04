@@ -1,4 +1,4 @@
-import ItemPreviewList from "../containers/item-preview-list";
+import ItemPreviewList from "../containers/category-list";
 import ItemForm from "../components/item-form";
 const Items = () => {
   return (

@@ -10,5 +10,5 @@ const { checkJwt } = require("../utils/checkJwt");
 
 router.route("/").get(getItems).post(postItem);
 router.route("/getItemCategories/:id").get(getItemCategories);
-router.route("/test").post(checkJwt, publicItem);
+router.route("/test").post(publicItem);
 module.exports = router;

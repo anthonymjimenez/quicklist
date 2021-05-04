@@ -1,4 +1,4 @@
-const ItemPreview = (item) => {
+const CategoryPreview = (item) => {
   return (
     <>
       Item
@@ -7,4 +7,4 @@ const ItemPreview = (item) => {
   );
 };
 
-export default ItemPreview;
+export default CategoryPreview;

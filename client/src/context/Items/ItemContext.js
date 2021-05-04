@@ -11,7 +11,6 @@ const initialState = {
   publicItem: {},
   items: [],
   categories: [],
-  loading: true,
 };
 
 export const ItemContext = createContext(initialState);
@@ -22,6 +21,7 @@ export const ItemProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ItemReducer, initialState);
   const [errState, errDispatch] = useReducer(ErrorReducer, errorState);
 
+  //errors
   function returnErrors(message, status, id) {
     // ??? dispatch/return
     errDispatch({
@@ -35,6 +35,8 @@ export const ItemProvider = ({ children }) => {
       type: "CLEAR_ERRORS",
     });
   }
+
+  //items
   async function getItems(sub) {
     try {
       const token = await getAccessTokenSilently();
@@ -57,6 +59,20 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
+
+  async function getPublicItem() {
+    try {
+      const response = await axios.get(`${serverUrl}/api/v1/items/test`);
+      const responseData = await response.json();
+      dispatch({
+        type: "GET_PUBLIC_ITEM",
+        payload: { items: responseData.results },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // categories
   async function getCategories(sub) {
     try {
       const token = await getAccessTokenSilently();
@@ -71,23 +87,31 @@ export const ItemProvider = ({ children }) => {
 
       dispatch({
         type: "GET_CATEGORIES",
-        payload: { categories: response.data.results },
+        payload: response.data.results,
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
       console.error(error);
     }
+    console.log(sub);
   }
 
-  async function getPublicItem() {
+  async function postNewCategory(category) {
     try {
-      const response = await axios.get(`${serverUrl}/api/v1/items/test`);
-      const responseData = await response.json();
+      const token = await getAccessTokenSilently();
+      const response = await axios.post(`${serverUrl}/api/v1/categories`, {
+        ...category,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
       dispatch({
-        type: "GET_PUBLIC_ITEM",
-        payload: { items: responseData.results },
+        type: "POST_CATEGORY",
+        payload: response.data.results,
       });
     } catch (error) {
+      // returnErrors(error.response.data.error, error.response.data.status);
       console.error(error);
     }
   }
@@ -98,11 +122,11 @@ export const ItemProvider = ({ children }) => {
         items: state.items,
         categories: state.categories,
         itemError: errState,
-        loading: state.loading,
         publicItem: state.publicItem,
         getItems,
         getPublicItem,
         getCategories,
+        postNewCategory,
       }}
     >
       {children}
