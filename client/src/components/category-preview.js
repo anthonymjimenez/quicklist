@@ -1,10 +1,20 @@
+import { ListGroup, ListGroupItem } from "reactstrap";
 const CategoryPreview = ({ category }) => {
   return (
-    <>
+    <ListGroup>
       <h1>{category.title}</h1>
-      {JSON.stringify(category, null, 2)}
-      <br />
-    </>
+      {category?.items.map((item) => (
+        <ListGroupItem>
+          <img
+            style={{ width: "auto", height: "auto" }}
+            alt=""
+            src={item.logo}
+            rounded
+          />
+          {"  " + item.title}{" "}
+        </ListGroupItem>
+      ))}
+    </ListGroup>
   );
 };
 

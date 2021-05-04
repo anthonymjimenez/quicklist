@@ -15,9 +15,7 @@ const ItemReducer = (state, action) => {
         ...state,
         items: [action.payload, state.items],
         categories: state.categories.map((category) => {
-          console.log("category", category, action.payload.categories);
           if (action.payload.categories.includes(category._id)) {
-            console.log("PING");
             category.items.push(action.payload);
           }
           return category;
