@@ -31,6 +31,18 @@ const ItemReducer = (state, action) => {
         ...state,
         categories: [action.payload, ...state.categories],
       };
+    case "UPDATE_CATEGORIES":
+      return {
+        ...state,
+        categories: state.categories.map((category) =>
+          category.items.map((item) => {
+            if (item._id === action.payload._id) {
+              item = action.payload;
+            }
+            return item;
+          })
+        ),
+      };
     default:
       return state;
   }
