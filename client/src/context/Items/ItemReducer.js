@@ -43,6 +43,17 @@ const ItemReducer = (state, action) => {
           })
         ),
       };
+    case "FIND_ONE_CATEGORY":
+      return {
+        ...state,
+        oneCategory: console.log(
+          state.categories.find(({ _id }) => {
+            console.log("HELLO");
+            console.log(_id, action.payload);
+            return _id === action.payload;
+          })
+        ),
+      };
     default:
       return state;
   }

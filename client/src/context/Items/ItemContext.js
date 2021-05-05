@@ -11,6 +11,7 @@ const initialState = {
   publicItem: {},
   items: [],
   categories: [],
+  oneCategory: {},
 };
 
 export const ItemContext = createContext(initialState);
@@ -137,6 +138,22 @@ export const ItemProvider = ({ children }) => {
     }
   }
 
+  function findOneCategory(_id) {
+    console.log(state.categories, "FINDONE");
+    console.log(
+      state.categories.find((cat) => {
+        console.log("HELLO");
+        console.log(_id, cat._id);
+        return _id === cat._id;
+      })
+    );
+
+    dispatch({
+      type: "FIND_ONE_CATEGORY",
+      payload: _id,
+    });
+  }
+
   return (
     <ItemContext.Provider
       value={{
@@ -144,11 +161,13 @@ export const ItemProvider = ({ children }) => {
         categories: state.categories,
         itemError: errState,
         publicItem: state.publicItem,
+        oneCategory: state.oneCategory,
         getItems,
         getPublicItem,
         getCategories,
         postNewCategory,
         postItem,
+        findOneCategory,
       }}
     >
       {children}

@@ -9,9 +9,9 @@ const CategoryList = () => {
   let {
     user: { sub },
   } = useAuth0();
-  useEffect(() => {
-    getCategories(sub);
-  }, []);
+  // useEffect(() => {
+  //   getCategories(sub);
+  // }, []);
 
   return (
     <>
@@ -19,7 +19,7 @@ const CategoryList = () => {
       {categories?.map((category) => (
         <Link
           to={{
-            pathname: "/category",
+            pathname: `/category/${category._id}`,
             state: category,
           }}
         >

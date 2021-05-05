@@ -6,8 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const ItemList = ({ items }) => {
   return (
     <>
-      {console.log("items", items)}
-      {items.map((item) => (
+      {items?.map((item) => (
         <ItemCard item={item} />
       ))}
     </>

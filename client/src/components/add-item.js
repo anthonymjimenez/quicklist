@@ -4,7 +4,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const AddItem = () => {
+const AddItem = ({ category = null }) => {
   let [categoryArray, setCategories] = useState([]);
   let [url, setUrl] = useState("");
   const { categories, getCategories, postItem } = useContext(ItemContext);
@@ -37,12 +37,14 @@ const AddItem = () => {
           placeholder="enter a url and let quicklist do the rest"
         />
       </FormGroup>
-      <Label for="categories">Quick Lists</Label>
       <FormGroup>
-        <Label for="exampleSelectMulti">Select Multiple</Label>
+        <Label for="categories">Quick Lists</Label>
+
         <Multiselect
           onSelect={setCategories}
           onRemove={setCategories}
+          placeholder={""}
+          selectedValues={category ? [category] : null}
           options={categories}
           displayValue="title"
         />
