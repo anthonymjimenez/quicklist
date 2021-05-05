@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavBar from "./components/nav-bar";
 import Loading from "./components/loading";
 import Footer from "./components/footer";
-import { Home, Profile, Items } from "./views";
+import { Home, Profile, Items, Category } from "./views";
 import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/" exact component={Home} />
           <ProtectedRoute path="/profile" component={Profile} />
           <ProtectedRoute path="/items" component={Items} />
+          <ProtectedRoute path="/category" component={Category} />
         </Switch>
       </div>
       <Footer />

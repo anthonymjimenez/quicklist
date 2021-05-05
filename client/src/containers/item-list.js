@@ -1,23 +1,15 @@
 import { ItemContext } from "../context/Items/ItemContext";
-import Item from "../components/item";
+import ItemCard from "../components/item-card";
 import React, { useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const ItemList = () => {
-  const { categories, getCategories } = useContext(ItemContext);
-  let {
-    user: { sub },
-  } = useAuth0();
-  useEffect(() => {
-    getCategories(sub);
-  }, []);
-
+const ItemList = ({ items }) => {
   return (
     <>
-      {console.log("items", categories)}
-      {/* {items.map((item) => (
-        <Item item={item} />
-      ))} */}
+      {console.log("items", items)}
+      {items.map((item) => (
+        <ItemCard item={item} />
+      ))}
     </>
   );
 };
