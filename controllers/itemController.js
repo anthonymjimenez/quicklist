@@ -35,12 +35,13 @@ exports.postItem = async (
   next
 ) => {
   try {
-    if (!validUrl.isUri(url)) {
-      return res.status(400).json({
-        error: true,
-        message: "Not a valid URL",
-      });
-    }
+    var validateItem = new Item({
+      url: url,
+      categories: categories,
+    });
+    const err = validateItem.validateSync();
+    if (err) throw err;
+
     const { host } = new Url(url);
 
     const parsedRequest =
@@ -50,26 +51,26 @@ exports.postItem = async (
 
     var newItem = new Item({
       ...parsedRequest,
+      categories: categories,
       createdBy: user_id,
     });
-    var item = newItem;
-    newItem.save();
 
     await asyncForEach(categories, async (categoryId) => {
       await addItemToCategory(categoryId, newItem._id);
-      item = await addCategoryToItem(newItem._id, categoryId);
     });
+
+    newItem.save();
 
     return res.status(200).json({
       completed: true,
-      results: item,
+      results: newItem,
     });
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return res.status(400).json({
+      error: error.toString(),
+      status: 400,
+    });
   }
-  // return res.status(200).json({
-  //   request: await parseFromAmazon(req.body),
-  // });
 };
 
 exports.publicItem = async ({ body: { url } }, res, next) => {

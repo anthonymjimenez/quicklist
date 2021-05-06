@@ -28,6 +28,7 @@ exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
     if (err) {
       return res.status(400).json({
         error: err.toString(),
+        status: 400,
       });
     }
   });

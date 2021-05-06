@@ -4,7 +4,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const AddItem = ({ category = null }) => {
+const AddItem = ({ category = null, clearErrors }) => {
   let [categoryArray, setCategories] = useState([]);
   let [url, setUrl] = useState("");
   const { categories, postItem } = useContext(ItemContext);
@@ -13,6 +13,8 @@ const AddItem = ({ category = null }) => {
   } = useAuth0();
 
   let post = (e) => {
+    e.preventDefault();
+    clearErrors();
     if (categoryArray.length === 0 && category) {
       postItem({ url, categories: category._id });
     }
@@ -22,7 +24,11 @@ const AddItem = ({ category = null }) => {
       url: url,
       categories: category_ids,
     });
-    console.log(category._id, categoryArray);
+
+    console.log({
+      url: url,
+      categories: category_ids,
+    });
   };
   return (
     <Form onSubmit={(e) => post(e)}>

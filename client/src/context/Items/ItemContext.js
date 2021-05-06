@@ -85,13 +85,18 @@ export const ItemProvider = ({ children }) => {
         },
       });
 
-      console.log("hello", state.categories);
+      console.log("hello", response);
       dispatch({
         type: "POST_ITEM",
         payload: response.data.results,
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      returnErrors(
+        error.response.data.error,
+        error.response.data.status,
+        "POST_ITEM_ERROR"
+      );
     }
   }
   // categories
@@ -133,6 +138,7 @@ export const ItemProvider = ({ children }) => {
         payload: response.data.results,
       });
     } catch (error) {
+      console.log(error.response.data.status);
       returnErrors(
         error.response.data.error,
         error.response.data.status,

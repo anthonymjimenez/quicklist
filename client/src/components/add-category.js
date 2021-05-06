@@ -3,28 +3,21 @@ import { ItemContext } from "../context/Items/ItemContext";
 import { useState, useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const AddCategory = () => {
+const AddCategory = ({ clearErrors }) => {
   const {
     user: { sub },
   } = useAuth0();
-  let { postNewCategory, itemError, clearErrors } = useContext(ItemContext);
-  const [message, setMessage] = useState(false);
+  let { postNewCategory } = useContext(ItemContext);
   let [title, setTitle] = useState("");
-
-  useEffect(() => {
-    itemError.id === "POST_CATEGORY_ERROR"
-      ? setMessage(itemError.message)
-      : setMessage(false);
-    console.log(message);
-  }, [itemError]);
 
   let post = (e) => {
     e.preventDefault();
+    clearErrors();
+
     postNewCategory({ title: title, user_id: sub });
   };
   return (
     <Form onSubmit={(e) => post(e)}>
-      {console.log(message)}
       <FormGroup>
         <Label for="title">Title</Label>
         <Input
@@ -36,7 +29,6 @@ const AddCategory = () => {
         />
       </FormGroup>
       <Button>Submit</Button>
-      {message && <> {message} </>}
     </Form>
   );
 };
