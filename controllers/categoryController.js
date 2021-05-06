@@ -18,24 +18,22 @@ exports.getCategoryItems = async ({ query: { user } }, res, next) => {
 };
 
 exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
-  try {
-    console.log(title, user_id);
-    const newCategory = new Category({
-      title,
-      createdBy: user_id,
-    });
+  console.log(title, user_id);
+  const newCategory = new Category({
+    title,
+    createdBy: user_id,
+  });
 
-    newCategory.save();
-    // add Categories to Item & add Item to Categories .findByIdAndUpdate
+  await newCategory.save(async function (err) {
+    if (err) {
+      return res.status(400).json({
+        error: err.toString(),
+      });
+    }
+  });
 
-    return res.status(200).json({
-      completed: true,
-      results: newCategory,
-    });
-  } catch (e) {
-    return console.error(e);
-  }
-  // return res.status(200).json({
-  //   request: await parseFromAmazon(req.body),
-  // });
+  return res.status(200).json({
+    completed: true,
+    results: newCategory,
+  });
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
@@ -9,19 +9,22 @@ const Category = () => {
     user: { sub },
   } = useAuth0();
   let { id } = useParams();
-  let { findOneCategory, oneCategory, getCategories } = useContext(ItemContext);
-
-  console.log(oneCategory, id);
-
+  let { categories, oneCategory } = useContext(ItemContext);
+  let [category, setCategory] = useState([]);
   useEffect(() => {
-    findOneCategory(id);
-  }, []);
+    let found = categories.find((cat) => {
+      return cat._id === id;
+    });
+
+    setCategory(found);
+  }, [categories]);
 
   return (
     <>
-      <AddItem category={oneCategory} />
-      Category: {oneCategory?.title}
-      <ItemList items={oneCategory?.items} />
+      {console.log(category)}
+      {/* <AddItem category={category} /> */}
+      Category: {category?.title}
+      {/* <ItemList items={category?.items} /> */}
     </>
   );
 };

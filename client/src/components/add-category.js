@@ -1,14 +1,22 @@
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const AddCategory = () => {
   const {
     user: { sub },
   } = useAuth0();
-  let { postNewCategory } = useContext(ItemContext);
+  let { postNewCategory, itemError, clearErrors } = useContext(ItemContext);
+  const [message, setMessage] = useState(false);
   let [title, setTitle] = useState("");
+
+  useEffect(() => {
+    itemError.id === "POST_CATEGORY_ERROR"
+      ? setMessage(itemError.message)
+      : setMessage(false);
+    console.log(message);
+  }, [itemError]);
 
   let post = (e) => {
     e.preventDefault();
@@ -16,7 +24,7 @@ const AddCategory = () => {
   };
   return (
     <Form onSubmit={(e) => post(e)}>
-      {console.log(title)}
+      {console.log(message)}
       <FormGroup>
         <Label for="title">Title</Label>
         <Input
@@ -28,6 +36,7 @@ const AddCategory = () => {
         />
       </FormGroup>
       <Button>Submit</Button>
+      {message && <> {message} </>}
     </Form>
   );
 };

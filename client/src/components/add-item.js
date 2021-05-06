@@ -7,22 +7,22 @@ import { useAuth0 } from "@auth0/auth0-react";
 const AddItem = ({ category = null }) => {
   let [categoryArray, setCategories] = useState([]);
   let [url, setUrl] = useState("");
-  const { categories, getCategories, postItem } = useContext(ItemContext);
+  const { categories, postItem } = useContext(ItemContext);
   let {
     user: { sub },
   } = useAuth0();
 
-  useEffect(() => {
-    getCategories(sub);
-  }, []);
-
   let post = (e) => {
-    e.preventDefault();
+    if (categoryArray.length === 0 && category) {
+      postItem({ url, categories: category._id });
+    }
     let category_ids = categoryArray.map(({ _id }) => _id);
+
     postItem({
       url: url,
       categories: category_ids,
     });
+    console.log(category._id, categoryArray);
   };
   return (
     <Form onSubmit={(e) => post(e)}>

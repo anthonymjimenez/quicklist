@@ -10,8 +10,15 @@ import { Home, Profile, Items, Category } from "./views";
 import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
-  const { isLoading } = useAuth0();
+  const { isLoading, user = null } = useAuth0();
   const { getCategories } = useContext(ItemContext);
+
+  useEffect(() => {
+    if (user) {
+      getCategories(user.sub);
+    }
+    console.log("PING");
+  }, [user]);
 
   if (isLoading) {
     return <Loading />;

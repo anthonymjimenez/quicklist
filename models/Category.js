@@ -4,6 +4,8 @@ const CategorySchema = new mongoose.Schema({
   title: {
     type: String,
     trim: true,
+    minLength: [2, "Too few characters"],
+    required: true,
   },
   items: [
     {
