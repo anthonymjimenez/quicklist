@@ -4,6 +4,8 @@ import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
 import AddItem from "../components/add-item";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
+
 const Category = () => {
   const {
     user: { sub },
@@ -21,10 +23,10 @@ const Category = () => {
 
   return (
     <>
-      {console.log(category)}
-      {/* <AddItem category={category} /> */}
+      {console.log("category", category)}
+      <AddItem category={category} />
       Category: {category?.title}
-      {/* <ItemList items={category?.items} /> */}
+      <ItemList items={category?.items} />
     </>
   );
 };

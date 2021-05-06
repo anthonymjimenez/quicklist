@@ -18,9 +18,9 @@ const CategoryList = () => {
       Item Preview List
       {categories?.map((category) => (
         <Link
+          style={{ textDecoration: "none" }}
           to={{
             pathname: `/category/${category._id}`,
-            state: category,
           }}
         >
           <CategoryPreview category={category} />

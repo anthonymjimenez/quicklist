@@ -50,8 +50,7 @@ const AddItem = ({ category = null, clearErrors }) => {
           onSelect={setCategories}
           onRemove={setCategories}
           placeholder={""}
-          selectedValues={category ? [category] : null}
-          options={categories}
+          options={categories} // clean up categories, title is now required
           displayValue="title"
         />
       </FormGroup>
