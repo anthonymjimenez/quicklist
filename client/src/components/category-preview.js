@@ -9,7 +9,6 @@ const CategoryPreview = ({ category }) => {
             style={{ width: "auto", height: "auto" }}
             alt=""
             src={item.logo}
-            rounded
           />
           {"  " + item.title}{" "}
         </ListGroupItem>

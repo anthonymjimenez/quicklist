@@ -6,18 +6,21 @@ import { ItemContext } from "./context/Items/ItemContext";
 import NavBar from "./components/nav-bar";
 import Loading from "./components/loading";
 import Footer from "./components/footer";
-import { Home, Profile, Items, Category } from "./views";
+import { Home, Profile, Items, Category, Item } from "./views";
 import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
   const { isLoading, user = null } = useAuth0();
-  const { getCategories } = useContext(ItemContext);
+  const { getCategories, getItems, categories, items } = useContext(
+    ItemContext
+  );
 
   useEffect(() => {
     if (user) {
+      getItems(user.sub);
       getCategories(user.sub);
     }
-    console.log("PING");
+    console.log("PING", categories, items);
   }, [user]);
 
   if (isLoading) {
@@ -33,6 +36,7 @@ const App = () => {
           <ProtectedRoute path="/profile" component={Profile} />
           <ProtectedRoute path="/items" component={Items} />
           <ProtectedRoute path="/category/:id" component={Category} />
+          <ProtectedRoute path="/item/:id" component={Item} />
         </Switch>
       </div>
       <Footer />

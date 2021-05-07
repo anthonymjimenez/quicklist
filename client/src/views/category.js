@@ -1,15 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
 import AddItem from "../components/add-item";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
 
 const Category = () => {
-  const {
-    user: { sub },
-  } = useAuth0();
   let { id } = useParams();
   let { categories, oneCategory } = useContext(ItemContext);
   let [category, setCategory] = useState([]);
@@ -17,7 +12,7 @@ const Category = () => {
     let found = categories.find((cat) => {
       return cat._id === id;
     });
-
+    console.log("PING");
     setCategory(found);
   }, [categories]);
 

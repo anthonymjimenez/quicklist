@@ -11,7 +11,6 @@ const initialState = {
   publicItem: {},
   items: [],
   categories: [],
-  oneCategory: [],
 };
 
 export const ItemContext = createContext(initialState);
@@ -46,13 +45,14 @@ export const ItemProvider = ({ children }) => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
           },
         }
       );
-
+      console.log(response.data, "d");
       dispatch({
         type: "GET_ITEMS",
-        payload: response.data.result,
+        payload: response.data.results,
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
@@ -147,22 +147,10 @@ export const ItemProvider = ({ children }) => {
       // returnErrors(error.response.data.error, error.response.data.status, "POST_CATEGORY_ERROR")
     }
   }
-
-  function findOneCategory(_id) {
-    let found = state.categories.find((cat) => {
-      console.log([cat._id, _id]);
-      console.log(cat._id === _id);
-      return cat._id === _id;
-    });
-
-    console.log("found", found);
-    console.log(state.categories, "categories");
-
-    // dispatch({
-    //   type: "FIND_ONE_CATEGORY",
-    //   payload: found,
-    // });
-  }
+  // dispatch({
+  //   type: "FIND_ONE_CATEGORY",
+  //   payload: found,
+  // });
 
   return (
     <ItemContext.Provider
@@ -171,14 +159,12 @@ export const ItemProvider = ({ children }) => {
         categories: state.categories,
         itemError: errState,
         publicItem: state.publicItem,
-        oneCategory: state.oneCategory,
         getItems,
         getPublicItem,
         clearErrors,
         getCategories,
         postNewCategory,
         postItem,
-        findOneCategory,
       }}
     >
       {children}

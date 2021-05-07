@@ -15,13 +15,12 @@ const AddItem = ({ category = null, clearErrors }) => {
   let post = (e) => {
     e.preventDefault();
     clearErrors();
-    if (categoryArray.length === 0 && category) {
-      postItem({ url, categories: category._id });
-    }
+
     let category_ids = categoryArray.map(({ _id }) => _id);
 
     postItem({
       url: url,
+      user_id: sub,
       categories: category_ids,
     });
 

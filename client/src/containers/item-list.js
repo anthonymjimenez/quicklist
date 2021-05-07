@@ -1,7 +1,5 @@
-import { ItemContext } from "../context/Items/ItemContext";
 import ItemCard from "../components/item-card";
-import React, { useContext, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 
 const ItemList = ({ items }) => {
   return (
