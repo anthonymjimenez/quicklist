@@ -16,7 +16,6 @@ const Item = () => {
     let found = items.find(({ _id }) => _id === id);
     setItem(found);
     console.log(id);
-    //    console.log("MOINE", items);
   }, []);
 
   return <>{console.log("Item", items)}</>;
