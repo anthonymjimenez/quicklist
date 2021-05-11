@@ -8,7 +8,7 @@ import ErrorReducer from "../Errors/ErrorReducer";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const initialState = {
-  publicItem: {},
+  publicItem: false,
   items: [],
   categories: [],
 };
@@ -60,9 +60,14 @@ export const ItemProvider = ({ children }) => {
     }
   }
 
-  async function getPublicItem() {
+  async function getPublicItem(item) {
     try {
-      const response = await axios.get(`${serverUrl}/api/v1/items/test`);
+      const response = await axios.post(`${serverUrl}/api/v1/items/test`, {
+        ...item,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      });
       dispatch({
         type: "GET_PUBLIC_ITEM",
         payload: response.data.results,

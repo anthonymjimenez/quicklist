@@ -37,7 +37,9 @@ const ItemCard = ({ item }) => {
               pathname: `/item/${item?._id}`,
             }}
           >
-            <CardTitle tag="h5">{item.title}</CardTitle>
+            <CardTitle tag="h5">
+              {item.title} (${item.price})
+            </CardTitle>
             <CardSubtitle tag="h6" className="mb-2 text-muted">
               <img src={item.logo} alt="Item logo" /> {item.hostname}
             </CardSubtitle>
