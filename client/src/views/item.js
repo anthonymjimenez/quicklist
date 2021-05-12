@@ -19,9 +19,20 @@ const Item = () => {
 
     setItem(found);
     console.log(id);
-  }, []);
+  }, [items.length]);
 
-  return <>{item === false && <Redirect to="/items" />}</>;
+  return (
+    <div>
+      <h2>
+        {console.log(item)}
+        {item?.title} (${item?.price}){" "}
+      </h2>
+      <br />
+      <img src={item?.logo} alt="Item logo" /> {item?.hostname}
+      <p>{item?.description}</p>
+      <a href={item?.url}>Product Url</a>
+    </div>
+  );
 };
 
 export default Item;
