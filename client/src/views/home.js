@@ -21,7 +21,7 @@ const Home = () => {
       {publicItem && (
         <>
           <h4> Create an Account to start saving items! </h4>
-          <ItemCard item={publicItem} />{" "}
+          <ItemCard item={publicItem} isPublic={true} />{" "}
         </>
       )}
     </div>

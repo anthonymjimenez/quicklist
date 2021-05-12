@@ -10,8 +10,9 @@ import {
   Image,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, isPublic = false }) => {
   return (
     <div>
       <Card>
@@ -34,7 +35,7 @@ const ItemCard = ({ item }) => {
           <Link
             style={{ textDecoration: "none" }}
             to={{
-              pathname: `/item/${item?._id}`,
+              pathname: isPublic ? `/items` : `/item/${item?._id}`,
             }}
           >
             <CardTitle tag="h5">
