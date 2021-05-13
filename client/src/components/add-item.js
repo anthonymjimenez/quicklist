@@ -23,11 +23,6 @@ const AddItem = ({ category = null, clearErrors }) => {
       user_id: sub,
       categories: category_ids,
     });
-
-    console.log({
-      url: url,
-      categories: category_ids,
-    });
   };
   return (
     <Form onSubmit={(e) => post(e)}>

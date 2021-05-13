@@ -13,7 +13,6 @@ const ItemForm = () => {
       : setMessage(false);
 
     console.log(itemError);
-    console.log(1234);
   }, [itemError]);
   return (
     <div>

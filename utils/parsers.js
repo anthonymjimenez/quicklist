@@ -82,8 +82,11 @@ const metascraper = require("metascraper")([
 
 async function uniParser(hosturl) {
   try {
+    console.log("in uni");
     const { body: html, url } = await got(hosturl);
+    console.log(html, url, "rightbeforemeta");
     const metadata = await metascraper({ html, url });
+    console.log("METADATA", metadata);
     metadata.availability =
       metadata.availability === "https://schema.org/InStock" ||
       metadata.availability === true;

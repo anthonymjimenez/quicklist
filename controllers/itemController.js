@@ -35,20 +35,25 @@ exports.postItem = async (
   next
 ) => {
   try {
+    console.log("GHELLo");
     var validateItem = new Item({
       url: url,
       categories: categories,
     });
+    console.log("CATEGORY", validateItem);
     const err = validateItem.validateSync();
     if (err) throw err;
 
     const { host } = new Url(url);
-
+    console.log(host);
     const parsedRequest =
       host === "www.amazon.com"
         ? await parseFromAmazon(url)
         : await uniParser(url);
+    console.log("Hello?");
+    console.log(host);
 
+    console.log(parsedRequest, "WOO");
     var newItem = new Item({
       ...parsedRequest,
       categories: categories,
