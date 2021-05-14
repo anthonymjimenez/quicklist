@@ -20,7 +20,15 @@ const MainNav = () => (
       Profile
     </NavLink>
     <NavLink
-      to="/items"
+      to="/create"
+      exact
+      className="nav-link"
+      activeClassName="router-link-exact-active"
+    >
+      Create
+    </NavLink>
+    <NavLink
+      to="/categories"
       exact
       className="nav-link"
       activeClassName="router-link-exact-active"

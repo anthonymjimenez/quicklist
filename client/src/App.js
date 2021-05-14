@@ -6,14 +6,13 @@ import "./App.css";
 import NavBar from "./components/nav-bar";
 import Loading from "./components/loading";
 import Footer from "./components/footer";
-import { Home, Profile, Items, Category, Item } from "./views";
+import { Home, Profile, Create, Category, Categories, Item } from "./views";
 import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
   const { isLoading, user = null } = useAuth0();
-  const { getCategories, getItems, categories, items } = useContext(
-    ItemContext
-  );
+  const { getCategories, getItems, categories, items } =
+    useContext(ItemContext);
 
   useEffect(() => {
     if (user) {
@@ -34,7 +33,8 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <ProtectedRoute path="/profile" component={Profile} />
-          <ProtectedRoute path="/items" component={Items} />
+          <ProtectedRoute path="/create" component={Create} />
+          <ProtectedRoute path="/categories" component={Categories} />
           <ProtectedRoute path="/category/:id" component={Category} />
           <ProtectedRoute path="/item/:id" component={Item} />
         </Switch>

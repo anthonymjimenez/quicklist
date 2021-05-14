@@ -6,16 +6,13 @@ import { Link } from "react-router-dom";
 
 const CategoryList = () => {
   const { categories } = useContext(ItemContext);
-  let {
-    user: { sub },
-  } = useAuth0();
+
   // useEffect(() => {
   //   getCategories(sub);
   // }, []);
 
   return (
     <>
-      Item Preview List
       {categories?.map((category) => (
         <Link
           style={{ textDecoration: "none" }}

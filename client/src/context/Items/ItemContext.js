@@ -11,6 +11,7 @@ const initialState = {
   publicItem: false,
   items: [],
   categories: [],
+  newlyUpdatedCategories: [],
 };
 
 export const ItemContext = createContext(initialState);
@@ -46,14 +47,12 @@ export const ItemProvider = ({ children }) => {
   //items
   async function getItems(sub) {
     try {
-      const token = await getAccessTokenSilently();
       const response = await axios.get(
         `${serverUrl}/api/v1/items?user=${sub}`,
         {
           headers: headers(),
         }
       );
-      console.log(response.data, "d");
       dispatch({
         type: "GET_ITEMS",
         payload: response.data.results,
@@ -83,18 +82,20 @@ export const ItemProvider = ({ children }) => {
 
   async function postItem(item) {
     try {
-      console.log("HELLO");
       const token = await getAccessTokenSilently();
 
       const response = await axios.post(`${serverUrl}/api/v1/items`, {
         ...item,
         headers: headers(),
       });
-
-      console.log("hello", response);
+      console.log(item.categories);
       dispatch({
         type: "POST_ITEM",
         payload: response.data.results,
+      });
+      dispatch({
+        type: "FIND_UPDATED_CATEGORIES",
+        payload: item.categories,
       });
     } catch (error) {
       console.log(error);
@@ -161,6 +162,7 @@ export const ItemProvider = ({ children }) => {
         categories: state.categories,
         itemError: errState,
         publicItem: state.publicItem,
+        newlyUpdatedCategories: state.newlyUpdatedCategories,
         getItems,
         getPublicItem,
         clearErrors,

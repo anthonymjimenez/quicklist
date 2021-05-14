@@ -3,7 +3,7 @@ import AddItem from "../components/add-item";
 import AddCategory from "../components/add-category";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
-import ErrorMessage from "./error_message";
+import ErrorMessage from "./error-message";
 const ItemForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const { itemError, clearErrors } = useContext(ItemContext);

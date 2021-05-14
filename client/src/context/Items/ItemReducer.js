@@ -21,6 +21,13 @@ const ItemReducer = (state, action) => {
           return category;
         }),
       };
+    case "FIND_UPDATED_CATEGORIES":
+      return {
+        ...state,
+        newlyUpdatedCategories: state.categories.filter((category) =>
+          action.payload.includes(category._id)
+        ),
+      };
     case "GET_CATEGORIES":
       return {
         ...state,
