@@ -3,6 +3,7 @@ import AddItem from "../components/add-item";
 import AddCategory from "../components/add-category";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
+import ErrorMessage from "./error_message";
 const ItemForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const { itemError, clearErrors } = useContext(ItemContext);
@@ -43,7 +44,7 @@ const ItemForm = () => {
           <AddCategory clearErrors={clearErrors} />
         </TabPane>
       </TabContent>
-      {message && <> {message} </>}
+      <ErrorMessage />
     </div>
   );
 };

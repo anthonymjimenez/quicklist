@@ -20,7 +20,14 @@ export const ItemProvider = ({ children }) => {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [state, dispatch] = useReducer(ItemReducer, initialState);
   const [errState, errDispatch] = useReducer(ErrorReducer, errorState);
-
+  async function headers() {
+    const token = await getAccessTokenSilently();
+    return {
+      Authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json;charset=UTF-8",
+    };
+  }
   //errors
   function returnErrors(message, status, id) {
     // ??? dispatch/return
@@ -43,10 +50,7 @@ export const ItemProvider = ({ children }) => {
       const response = await axios.get(
         `${serverUrl}/api/v1/items?user=${sub}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-          },
+          headers: headers(),
         }
       );
       console.log(response.data, "d");
@@ -84,10 +88,7 @@ export const ItemProvider = ({ children }) => {
 
       const response = await axios.post(`${serverUrl}/api/v1/items`, {
         ...item,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json;charset=UTF-8",
-        },
+        headers: headers(),
       });
 
       console.log("hello", response);
@@ -111,9 +112,7 @@ export const ItemProvider = ({ children }) => {
       const response = await axios.get(
         `${serverUrl}/api/v1/categories?user=${sub}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: headers(),
         }
       );
 
@@ -133,9 +132,7 @@ export const ItemProvider = ({ children }) => {
       const token = await getAccessTokenSilently();
       const response = await axios.post(`${serverUrl}/api/v1/categories`, {
         ...category,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers(),
       });
       console.log(response);
       dispatch({
@@ -145,8 +142,8 @@ export const ItemProvider = ({ children }) => {
     } catch (error) {
       console.log(error.response.data.status);
       returnErrors(
-        error.response.data.error,
-        error.response.data.status,
+        error?.response.data.error,
+        error?.response.data.status,
         "POST_CATEGORY_ERROR"
       );
       // returnErrors(error.response.data.error, error.response.data.status, "POST_CATEGORY_ERROR")
