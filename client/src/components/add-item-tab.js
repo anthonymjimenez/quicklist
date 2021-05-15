@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import AddCategories from "./add-categories";
 
 const AddItem = ({ category = null, clearErrors }) => {
   let [categoryArray, setCategories] = useState([]);
@@ -37,17 +38,7 @@ const AddItem = ({ category = null, clearErrors }) => {
           placeholder="enter a url and let quicklist do the rest"
         />
       </FormGroup>
-      <FormGroup>
-        <Label for="categories">Quick Lists</Label>
-
-        <Multiselect
-          onSelect={setCategories}
-          onRemove={setCategories}
-          placeholder={""}
-          options={categories} // clean up categories, title is now required
-          displayValue="title"
-        />
-      </FormGroup>
+      <AddCategories categories={categories} setCategories={setCategories} />
       <Button>Submit</Button>
     </Form>
   );
