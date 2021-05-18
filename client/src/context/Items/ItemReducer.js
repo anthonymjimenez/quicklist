@@ -13,7 +13,7 @@ const ItemReducer = (state, action) => {
     case "POST_ITEM":
       return {
         ...state,
-        items: [action.payload, state.items],
+        items: [action.payload, ...state.items],
         categories: state.categories.map((category) => {
           if (action.payload.categories.includes(category._id)) {
             category.items.push(action.payload);

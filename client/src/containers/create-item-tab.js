@@ -27,7 +27,6 @@ const CreateItemTab = ({ category = null, clearErrors }) => {
   };
   return (
     <Form onSubmit={(e) => post(e)}>
-      {console.log("selected", categoryArray)}
       <CreateItem setUrl={setUrl} />
       <AddCategories categories={categories} setCategories={setCategories} />
       <Button>Submit</Button>

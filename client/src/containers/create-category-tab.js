@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import CreateCategory from "../components/create-category";
 
-const AddCategoryTab = ({ clearErrors }) => {
+const CreateCategoryTab = ({ clearErrors }) => {
   const {
     user: { sub },
   } = useAuth0();
@@ -25,4 +25,4 @@ const AddCategoryTab = ({ clearErrors }) => {
   );
 };
 
-export default AddCategoryTab;
+export default CreateCategoryTab;
