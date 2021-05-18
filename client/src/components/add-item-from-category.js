@@ -2,6 +2,7 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useState, useContext, useEffect } from "react";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import CreateItem from "./create-item";
 
 const AddItemFromCategory = ({ category = null, clearErrors }) => {
   let [url, setUrl] = useState("");
@@ -22,17 +23,7 @@ const AddItemFromCategory = ({ category = null, clearErrors }) => {
   };
   return (
     <Form onSubmit={(e) => post(e)}>
-      <FormGroup>
-        <Label for="title">Url</Label>
-        <Input
-          type="text"
-          name="text"
-          id="title"
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="enter a url and let quicklist do the rest"
-        />
-      </FormGroup>
-
+      <CreateItem setUrl={setUrl} />
       <Button>Submit</Button>
     </Form>
   );

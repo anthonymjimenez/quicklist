@@ -1,5 +1,5 @@
 import { ItemContext } from "../context/Items/ItemContext";
-import CategoryPreview from "../components/category-preview";
+import CategoryPreview from "./category-preview";
 import React, { useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { FormGroup, Label, Multiselect } from "reactstrap";
+import { FormGroup, Label } from "reactstrap";
+import { Multiselect } from "multiselect-react-dropdown";
 
-const AddCategories = ({ categories, setCategories }) => {
+const AddCategories = ({ categories, setCategories }) => (
   <FormGroup>
     <Label for="categories">Quick Lists</Label>
 
@@ -12,7 +12,7 @@ const AddCategories = ({ categories, setCategories }) => {
       options={categories} // clean up categories, title is now required
       displayValue="title"
     />
-  </FormGroup>;
-};
+  </FormGroup>
+);
 
 export default AddCategories;

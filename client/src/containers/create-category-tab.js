@@ -2,8 +2,9 @@ import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useState, useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import CreateCategory from "../components/create-category";
 
-const AddCategory = ({ clearErrors }) => {
+const AddCategoryTab = ({ clearErrors }) => {
   const {
     user: { sub },
   } = useAuth0();
@@ -18,19 +19,10 @@ const AddCategory = ({ clearErrors }) => {
   };
   return (
     <Form onSubmit={(e) => post(e)}>
-      <FormGroup>
-        <Label for="title">Title</Label>
-        <Input
-          type="text"
-          name="text"
-          id="title"
-          placeholder="Create new quicklist"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </FormGroup>
+      <CreateCategory setTitle={setTitle} />
       <Button>Submit</Button>
     </Form>
   );
 };
 
-export default AddCategory;
+export default AddCategoryTab;

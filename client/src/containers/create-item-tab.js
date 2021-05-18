@@ -1,11 +1,11 @@
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useState, useContext, useEffect } from "react";
-import { Multiselect } from "multiselect-react-dropdown";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
-import AddCategories from "./add-categories";
+import AddCategories from "../components/add-categories";
+import CreateItem from "../components/create-item";
 
-const AddItem = ({ category = null, clearErrors }) => {
+const CreateItemTab = ({ category = null, clearErrors }) => {
   let [categoryArray, setCategories] = useState([]);
   let [url, setUrl] = useState("");
   const { categories, postItem } = useContext(ItemContext);
@@ -28,20 +28,11 @@ const AddItem = ({ category = null, clearErrors }) => {
   return (
     <Form onSubmit={(e) => post(e)}>
       {console.log("selected", categoryArray)}
-      <FormGroup>
-        <Label for="title">Url</Label>
-        <Input
-          type="text"
-          name="text"
-          id="title"
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="enter a url and let quicklist do the rest"
-        />
-      </FormGroup>
+      <CreateItem setUrl={setUrl} />
       <AddCategories categories={categories} setCategories={setCategories} />
       <Button>Submit</Button>
     </Form>
   );
 };
 
-export default AddItem;
+export default CreateItemTab;

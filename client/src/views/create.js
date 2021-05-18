@@ -1,5 +1,4 @@
-import CategoryList from "../containers/category-list";
-import ItemForm from "../components/item-form";
+import ItemForm from "../containers/item-form";
 import { ItemContext } from "../context/Items/ItemContext";
 import React, { useContext, useEffect } from "react";
 const Create = () => {

@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import AddItem from "../components/add-item";
-import AddCategory from "../components/add-category";
+import AddItem from "./create-item-tab";
+import AddCategoryTab from "./create-category-tab";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
-import ErrorMessage from "./error-message";
+import ErrorMessage from "../components/error-message";
 const ItemForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const { itemError, clearErrors } = useContext(ItemContext);
@@ -41,7 +41,7 @@ const ItemForm = () => {
           <AddItem clearErrors={clearErrors} />
         </TabPane>
         <TabPane tabId="2">
-          <AddCategory clearErrors={clearErrors} />
+          <AddCategoryTab clearErrors={clearErrors} />
         </TabPane>
       </TabContent>
       <ErrorMessage />
