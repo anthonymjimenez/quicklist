@@ -53,6 +53,7 @@ export const ItemProvider = ({ children }) => {
           headers: headers(),
         }
       );
+      console.log(response.data.results, "RESPONSE");
       dispatch({
         type: "GET_ITEMS",
         payload: response.data.results,

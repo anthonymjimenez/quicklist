@@ -1,6 +1,7 @@
 import ItemForm from "../containers/item-form";
 import { ItemContext } from "../context/Items/ItemContext";
 import React, { useContext, useEffect } from "react";
+import CategoryList from "../containers/category-list";
 const Create = () => {
   const { newlyUpdatedCategories } = useContext(ItemContext);
 
@@ -13,7 +14,7 @@ const Create = () => {
       <ItemForm />
       <h3>Newly Updated </h3>
 
-      {console.log(newlyUpdatedCategories)}
+      <CategoryList categories={newlyUpdatedCategories} />
     </>
   );
 };

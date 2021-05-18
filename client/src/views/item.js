@@ -1,7 +1,15 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
-
+import { Media } from "reactstrap";
+import { FcSynchronize } from "react-icons/fc";
+import {
+  IoReloadCircleSharp,
+  IoPencilSharp,
+  IoPaperPlaneSharp,
+  IoTrashSharp,
+  IoAddSharp,
+} from "react-icons/io5";
 const Item = () => {
   let { id } = useParams();
   let { items } = useContext(ItemContext);
@@ -15,7 +23,7 @@ const Item = () => {
     }
 
     setItem(found);
-    console.log(id);
+    console.log(id, items);
   }, [items, id]);
 
   return (
@@ -25,9 +33,33 @@ const Item = () => {
         {item?.title} (${item?.price}){" "}
       </h2>
       <br />
+      <div style={{ width: "90%" }}>
+        <Media
+          style={{ width: "85%" }}
+          object
+          src={item?.image}
+          alt="Quicklist Icon"
+        />
+      </div>
       <img src={item?.logo} alt="Item logo" /> {item?.hostname}
       <p>{item?.description}</p>
-      <a href={item?.url}>Product Url</a>
+      <div>
+        <>
+          <IoReloadCircleSharp />
+        </>
+        <>
+          <IoPencilSharp />
+        </>
+        <>
+          <IoAddSharp />
+        </>
+        <a href={item?.url} rel="noreferrer" target="_blank">
+          <IoPaperPlaneSharp />
+        </a>
+        <>
+          <IoTrashSharp />
+        </>
+      </div>
     </div>
   );
 };

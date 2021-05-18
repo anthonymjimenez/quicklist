@@ -1,11 +1,8 @@
-import { ItemContext } from "../context/Items/ItemContext";
 import CategoryPreview from "./category-preview";
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const CategoryList = () => {
-  const { categories } = useContext(ItemContext);
-
+const CategoryList = ({ categories }) => {
   return (
     <>
       {categories?.map((category) => (
