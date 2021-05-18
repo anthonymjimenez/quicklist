@@ -4,9 +4,9 @@ const CategoryPreview = ({ category }) => {
     <ListGroup>
       <h1>{category.title}</h1>
       {category?.items.map((item) => (
-        <ListGroupItem>
+        <ListGroupItem key={item._id}>
           <img
-            style={{ width: "auto", height: "auto" }}
+            style={{ width: "45px", height: "30px" }}
             alt=""
             src={item.logo}
           />

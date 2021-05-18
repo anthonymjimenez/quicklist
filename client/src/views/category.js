@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
 import AddItemFromCategory from "../components/add-item-from-category";
+import ErrorMessage from "../components/error-message";
 
 const Category = () => {
   let { id } = useParams();
@@ -15,12 +16,12 @@ const Category = () => {
       return cat._id === id;
     });
     setCategory(found);
-  }, [categories]);
+  }, [categories, id]);
 
   useEffect(() => {
-    if (itemError.id === "POST_ITEM_ERROR") {
-      setMessage(itemError.message);
-    }
+    itemError.id === "POST_ITEM_ERROR"
+      ? setMessage(itemError.message)
+      : setMessage(false);
 
     console.log(itemError);
   }, [itemError]);
@@ -29,6 +30,7 @@ const Category = () => {
     <>
       {console.log("category", category)}
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
+      <ErrorMessage message={message} />
       Category: {category?.title}
       <ItemList items={category?.items} />
     </>

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer } from "react";
 import ItemReducer from "./ItemReducer";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -82,8 +82,6 @@ export const ItemProvider = ({ children }) => {
 
   async function postItem(item) {
     try {
-      const token = await getAccessTokenSilently();
-
       const response = await axios.post(`${serverUrl}/api/v1/items`, {
         ...item,
         headers: headers(),
@@ -109,7 +107,6 @@ export const ItemProvider = ({ children }) => {
   // categories
   async function getCategories(sub) {
     try {
-      const token = await getAccessTokenSilently();
       const response = await axios.get(
         `${serverUrl}/api/v1/categories?user=${sub}`,
         {
@@ -130,7 +127,6 @@ export const ItemProvider = ({ children }) => {
 
   async function postNewCategory(category) {
     try {
-      const token = await getAccessTokenSilently();
       const response = await axios.post(`${serverUrl}/api/v1/categories`, {
         ...category,
         headers: headers(),

@@ -1,26 +1,22 @@
 import { ItemContext } from "../context/Items/ItemContext";
 import CategoryPreview from "./category-preview";
-import React, { useContext, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 const CategoryList = () => {
   const { categories } = useContext(ItemContext);
 
-  // useEffect(() => {
-  //   getCategories(sub);
-  // }, []);
-
   return (
     <>
       {categories?.map((category) => (
         <Link
+          key={category._id}
           style={{ textDecoration: "none" }}
           to={{
             pathname: `/category/${category._id}`,
           }}
         >
-          <CategoryPreview category={category} />
+          <CategoryPreview category={category} key={category._id} />
         </Link>
       ))}
     </>

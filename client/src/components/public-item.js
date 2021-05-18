@@ -1,13 +1,12 @@
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { Multiselect } from "multiselect-react-dropdown";
+import { Button, Form } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useState, useContext } from "react";
+import CreateItem from "./create-item";
 
 const PublicItem = () => {
   let [url, setUrl] = useState("");
   const { publicItem, getPublicItem } = useContext(ItemContext);
 
-  let fetchPublicItem = () => {};
   return (
     <Form
       onSubmit={(e) => {
@@ -15,15 +14,7 @@ const PublicItem = () => {
         getPublicItem({ url: url });
       }}
     >
-      <FormGroup>
-        <Input
-          type="text"
-          name="text"
-          id="title"
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="enter a url and let quicklist do the rest"
-        />
-      </FormGroup>
+      <CreateItem setUrl={setUrl} />
       <Button>Submit</Button>
       {console.log("public", publicItem)}
     </Form>

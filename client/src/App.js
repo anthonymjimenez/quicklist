@@ -20,6 +20,7 @@ const App = () => {
       getCategories(user.sub);
     }
     console.log("PING", categories, items);
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (isLoading) {

@@ -44,7 +44,7 @@ const ItemForm = () => {
           <AddCategoryTab clearErrors={clearErrors} />
         </TabPane>
       </TabContent>
-      <ErrorMessage />
+      <ErrorMessage message={message} />
     </div>
   );
 };

@@ -7,10 +7,8 @@ import {
   CardTitle,
   CardSubtitle,
   CardLink,
-  Image,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const ItemCard = ({ item, isPublic = false }) => {
   return (

@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import React, { useContext } from "react";
 import { Media } from "reactstrap";
 import ItemCard from "../components/item-card";
