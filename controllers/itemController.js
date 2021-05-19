@@ -2,7 +2,11 @@ let {
   parsers: { parseFromAmazon, uniParser },
 } = require("../utils/parsers");
 let {
-  updateEntries: { addItemToCategory, addCategoryToItem },
+  updateEntries: {
+    addItemToCategory,
+    addCategoryToItem,
+    removeItemFromCategory,
+  },
 } = require("../utils/updateEntries");
 let { filterByUser } = require("../utils/users");
 let Item = require("../models/Item");
@@ -35,36 +39,30 @@ exports.postItem = async (
   next
 ) => {
   try {
-    console.log("GHELLo");
     var validateItem = new Item({
       url: url,
       categories: categories,
     });
-    console.log("CATEGORY", validateItem);
-    const err = validateItem.validateSync();
-    if (err) throw err;
-
+    let error = validateItem.validateSync();
+    if (error) throw error;
     const { host } = new Url(url);
-    console.log(host);
+
     const parsedRequest =
       host === "www.amazon.com"
         ? await parseFromAmazon(url)
         : await uniParser(url);
-    console.log("Hello?");
-    console.log(host);
 
-    console.log(parsedRequest, "WOO");
     var newItem = new Item({
       ...parsedRequest,
       categories: categories,
       createdBy: user_id,
     });
 
-    await asyncForEach(categories, async (categoryId) => {
+    asyncForEach(categories, async (categoryId) => {
       await addItemToCategory(categoryId, newItem._id);
     });
 
-    newItem.save();
+    await newItem.save();
 
     return res.status(200).json({
       completed: true,
@@ -105,5 +103,30 @@ exports.publicItem = async ({ body: { url } }, res, next) => {
     });
   } catch (e) {
     return console.error(e);
+  }
+};
+
+exports.autoUpdate = async () => {};
+
+exports.deleteItem = async ({ body: { id } }, res, next) => {
+  try {
+    // find item
+    const item = await Item.findById(id);
+    asyncForEach(item.categories, async (category) => {
+      await removeItemFromCategory(category._id, item._id);
+    });
+
+    // return results
+    let i = await item.remove();
+    console.log("I", i);
+
+    res.status(200).json({
+      completed: result,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      error: err.toString(),
+      status: 400,
+    });
   }
 };

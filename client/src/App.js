@@ -19,7 +19,7 @@ const App = () => {
       getItems(user.sub);
       getCategories(user.sub);
     }
-    console.log("PING", categories, items);
+    console.log("PING", user);
     //  eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 

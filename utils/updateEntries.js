@@ -22,4 +22,17 @@ const addCategoryToItem = (itemId, categoryId) => {
 
   console.log(item);
 };
-exports.updateEntries = { addItemToCategory, addCategoryToItem };
+
+const removeItemFromCategory = (categoryId, itemId) => {
+  return Category.findByIdAndUpdate(
+    categoryId,
+    { $pull: { items: { _id: itemId } } },
+    { useFindAndModify: false }
+  );
+};
+
+exports.updateEntries = {
+  addItemToCategory,
+  addCategoryToItem,
+  removeItemFromCategory,
+};
