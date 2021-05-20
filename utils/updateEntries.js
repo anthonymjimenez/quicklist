@@ -19,8 +19,6 @@ const addCategoryToItem = (itemId, categoryId) => {
     { $push: { categories: categoryId } },
     { new: true, useFindAndModify: false }
   );
-
-  console.log(item);
 };
 
 const removeItemFromCategory = (categoryId, itemId) => {

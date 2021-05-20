@@ -12,7 +12,6 @@ let { filterByUser } = require("../utils/users");
 let Item = require("../models/Item");
 let Url = require("url-parse");
 var validUrl = require("valid-url");
-const Item = require("../models/Item");
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -106,23 +105,25 @@ exports.publicItem = async ({ body: { url } }, res, next) => {
     return console.error(e);
   }
 };
-exports.update = async ({ body: { id, updates } }) => {
+exports.update = async ({ body: { id, updates } }, res, next) => {
   try {
-    const item = await Item.findById(id);
-    let newItem = await item.updateOne(updates, {
+    console.log(id, updates, "HELLO");
+    let newItem = await Item.findOneAndUpdate({ _id: id }, updates, {
       new: true,
+      useFindAndModify: false,
     });
-    res.json({
-      message: "Automatic update successful!",
-      user: newItem,
+    console.log(newItem, "NEW ITEM");
+    return res.status(200).json({
+      message: "Update successful!",
+      item: newItem,
     });
   } catch (error) {
-    res.status(500).json({
-      error: err,
+    return res.status(500).json({
+      error: error,
     });
   }
 };
-exports.autoUpdate = async ({ body: { id } }) => {
+exports.autoUpdate = async ({ body: { id } }, res, next) => {
   try {
     const item = await Item.findById(id);
 
@@ -131,12 +132,28 @@ exports.autoUpdate = async ({ body: { id } }) => {
         ? await parseFromAmazon(item.url)
         : await uniParser(item.url);
 
-    let newItem = await item.updateOne(parsedRequest, {
+    const updatedFields = {};
+    for (prop in parsedRequest) {
+      if (parsedRequest[prop] !== item[prop] && parsedRequest[prop] !== null) {
+        console.log("HELLO?");
+        updatedFields[prop] = parsedRequest[prop];
+      }
+    }
+    console.log(updatedFields);
+    if (Object.keys(updatedFields).length === 0) {
+      return res.status(200).json({
+        message: "Done- No update needed!",
+      });
+    }
+
+    let newItem = await Item.findOneAndUpdate({ _id: id }, updatedFields, {
       new: true,
+      useFindAndModify: false,
     });
-    res.json({
-      message: "Automatic update successful!",
-      user: newItem,
+
+    return res.status(200).json({
+      message: "Update successful!",
+      item: newItem,
     });
   } catch (error) {
     res.status(500).json({

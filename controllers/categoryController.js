@@ -2,19 +2,28 @@ let Category = require("../models/Category");
 let { filterByUser } = require("../utils/users");
 
 exports.getCategoryItems = async ({ query: { user } }, res, next) => {
-  const userCategories = filterByUser(await Category.find(), user);
-  let pop = async () =>
-    Promise.all(
-      userCategories.map(({ _id }) => Category.findById(_id).populate("items"))
-    );
+  try {
+    const userCategories = filterByUser(await Category.find(), user);
+    let pop = async () =>
+      Promise.all(
+        userCategories.map(({ _id }) =>
+          Category.findById(_id).populate("items")
+        )
+      );
 
-  pop().then((categories) => {
-    return res.status(200).json({
-      pinged: true,
-      results: categories,
-      count: userCategories.length,
+    pop().then((categories) => {
+      return res.status(200).json({
+        pinged: true,
+        results: categories,
+        count: userCategories.length,
+      });
     });
-  });
+  } catch (error) {
+    return res.status(400).json({
+      error: err.toString(),
+      status: 400,
+    });
+  }
 };
 
 exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
@@ -24,7 +33,7 @@ exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
     createdBy: user_id,
   });
 
-  await newCategory.save(async function (err) {
+  newCategory.save(async function (err) {
     if (err) {
       return res.status(400).json({
         error: err.toString(),
