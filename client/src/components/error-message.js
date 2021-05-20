@@ -1,5 +1,6 @@
+import { Alert } from "reactstrap";
 const ErrorMessage = ({ message = false }) => {
-  return message ? <> {message} </> : null;
+  return message ? <Alert color="danger">{message}</Alert> : null;
 };
 
 export default ErrorMessage;

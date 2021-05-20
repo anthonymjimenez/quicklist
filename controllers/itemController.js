@@ -107,7 +107,6 @@ exports.publicItem = async ({ body: { url } }, res, next) => {
 };
 exports.update = async ({ body: { id, updates } }, res, next) => {
   try {
-    console.log(id, updates, "HELLO");
     let newItem = await Item.findOneAndUpdate({ _id: id }, updates, {
       new: true,
       useFindAndModify: false,
@@ -161,7 +160,29 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
     });
   }
 };
+exports.addCategoriesToExistingItem = (
+  { body: { id, newCategories } },
+  res,
+  next
+) => {
+  try {
+    const item = await Item.findById(id);
+    item.categories.push(...newCategories);
+    await item.save();
+    asyncForEach(newCategories, async (categoryId) => {
+      await addItemToCategory(categoryId, item.id);
+    });
 
+    return res.status(200).json({
+      message: "Update successful!",
+      item: item,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+};
 exports.deleteItem = async ({ body: { id } }, res, next) => {
   try {
     // find item
