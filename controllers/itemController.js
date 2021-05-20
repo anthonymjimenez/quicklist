@@ -12,6 +12,7 @@ let { filterByUser } = require("../utils/users");
 let Item = require("../models/Item");
 let Url = require("url-parse");
 var validUrl = require("valid-url");
+const Item = require("../models/Item");
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -105,8 +106,44 @@ exports.publicItem = async ({ body: { url } }, res, next) => {
     return console.error(e);
   }
 };
+exports.update = async ({ body: { id, updates } }) => {
+  try {
+    const item = await Item.findById(id);
+    let newItem = await item.updateOne(updates, {
+      new: true,
+    });
+    res.json({
+      message: "Automatic update successful!",
+      user: newItem,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+};
+exports.autoUpdate = async ({ body: { id } }) => {
+  try {
+    const item = await Item.findById(id);
 
-exports.autoUpdate = async () => {};
+    const parsedRequest =
+      item.hostname === "www.amazon.com"
+        ? await parseFromAmazon(item.url)
+        : await uniParser(item.url);
+
+    let newItem = await item.updateOne(parsedRequest, {
+      new: true,
+    });
+    res.json({
+      message: "Automatic update successful!",
+      user: newItem,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+};
 
 exports.deleteItem = async ({ body: { id } }, res, next) => {
   try {
