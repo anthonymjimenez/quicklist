@@ -1,6 +1,9 @@
 let Category = require("../models/Category");
 let { filterByUser } = require("../utils/users");
-
+let { errorStatus } = require("../utils/errors");
+let {
+  updateEntries: { removeCategoryFromItem },
+} = require("../utils/updateEntries");
 exports.getCategoryItems = async ({ query: { user } }, res, next) => {
   try {
     const userCategories = filterByUser(await Category.find(), user);
@@ -19,31 +22,87 @@ exports.getCategoryItems = async ({ query: { user } }, res, next) => {
       });
     });
   } catch (error) {
-    return res.status(400).json({
-      error: err.toString(),
-      status: 400,
-    });
+    return errorStatus(res, error);
   }
 };
 
 exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
-  console.log(title, user_id);
-  const newCategory = new Category({
-    title,
-    createdBy: user_id,
-  });
+  try {
+    console.log(title, user_id);
+    const newCategory = new Category({
+      title,
+      createdBy: user_id,
+    });
 
-  newCategory.save(async function (err) {
-    if (err) {
-      return res.status(400).json({
-        error: err.toString(),
-        status: 400,
-      });
-    }
-  });
+    newCategory.save(async function (err) {
+      if (err) {
+        return res.status(400).json({
+          error: err.toString(),
+          status: 400,
+        });
+      }
+    });
 
-  return res.status(200).json({
-    completed: true,
-    results: newCategory,
-  });
+    return res.status(200).json({
+      completed: true,
+      results: newCategory,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
+};
+exports.update = async ({ body: { id, updates } }, res, next) => {
+  try {
+    let newCategory = await Category.findOneAndUpdate({ _id: id }, updates, {
+      new: true,
+      useFindAndModify: false,
+    });
+    return res.status(200).json({
+      message: "Update successful!",
+      item: newCategory,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
+};
+
+exports.deleteCategory = async ({ body: { id } }, res, next) => {
+  try {
+    // find item
+    const category = await Category.findById(id);
+    asyncForEach(category.items, async (category) => {
+      await removeCategoryFromItem(category._id, item._id);
+    });
+
+    // return results
+    let deletedCategory = await category.remove();
+
+    res.status(200).json({
+      completed: deletedCategory,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
+};
+
+exports.removeItemFromExistingCategory = async (
+  { body: { id, removedItems } },
+  res,
+  next
+) => {
+  try {
+    const Category = await Category.findById(id);
+    item.categories.push(...newCategories);
+    await item.save();
+    asyncForEach(newCategories, async (categoryId) => {
+      await addItemToCategory(categoryId, item.id);
+    });
+
+    return res.status(200).json({
+      message: "Update successful!",
+      item: item,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
 };

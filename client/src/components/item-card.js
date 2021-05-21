@@ -33,7 +33,7 @@ const ItemCard = ({ item, isPublic = false }) => {
           <Link
             style={{ textDecoration: "none" }}
             to={{
-              pathname: isPublic ? `/items` : `/item/${item?._id}`,
+              pathname: isPublic ? `/categories` : `/item/${item?._id}`,
             }}
           >
             <CardTitle tag="h5">

@@ -13,6 +13,7 @@ const CategoryList = ({ categories }) => {
             pathname: `/category/${category._id}`,
           }}
         >
+          {/* // isEdit */}
           <CategoryPreview category={category} key={category._id} />
         </Link>
       ))}

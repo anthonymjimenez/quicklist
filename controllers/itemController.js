@@ -2,12 +2,9 @@ let {
   parsers: { parseFromAmazon, uniParser },
 } = require("../utils/parsers");
 let {
-  updateEntries: {
-    addItemToCategory,
-    addCategoryToItem,
-    removeItemFromCategory,
-  },
+  updateEntries: { addItemToCategory, removeItemFromCategory },
 } = require("../utils/updateEntries");
+let { errorStatus } = require("../utils/errors");
 let { filterByUser } = require("../utils/users");
 let Item = require("../models/Item");
 let Url = require("url-parse");
@@ -19,18 +16,26 @@ async function asyncForEach(array, callback) {
   }
 }
 exports.getItems = async ({ query: { user } }, res, next) => {
-  const userItems = filterByUser(await Item.find(), user);
-  return res.status(200).json({
-    pinged: true,
-    results: userItems,
-    count: userItems.length,
-  });
+  try {
+    const userItems = filterByUser(await Item.find(), user);
+    return res.status(200).json({
+      results: userItems,
+      count: userItems.length,
+      success: true,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
 };
 exports.getItemCategories = async ({ params: { id } }, res) => {
-  return res.status(200).json({
-    pinged: true,
-    results: await Item.findById(id).populate("categories"),
-  });
+  try {
+    return res.status(200).json({
+      success: true,
+      results: await Item.findById(id).populate("categories"),
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
 };
 
 exports.postItem = async (
@@ -65,14 +70,11 @@ exports.postItem = async (
     await newItem.save();
 
     return res.status(200).json({
-      completed: true,
+      success: true,
       results: newItem,
     });
   } catch (error) {
-    return res.status(400).json({
-      error: error.toString(),
-      status: 400,
-    });
+    return errorStatus(res, error);
   }
 };
 
@@ -98,11 +100,11 @@ exports.publicItem = async ({ body: { url } }, res, next) => {
     });
 
     return res.status(200).json({
-      completed: true,
+      success: true,
       results: newItem,
     });
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return errorStatus(res, error);
   }
 };
 exports.update = async ({ body: { id, updates } }, res, next) => {
@@ -111,15 +113,13 @@ exports.update = async ({ body: { id, updates } }, res, next) => {
       new: true,
       useFindAndModify: false,
     });
-    console.log(newItem, "NEW ITEM");
     return res.status(200).json({
+      success: true,
       message: "Update successful!",
       item: newItem,
     });
   } catch (error) {
-    return res.status(500).json({
-      error: error,
-    });
+    return errorStatus(res, error);
   }
 };
 exports.autoUpdate = async ({ body: { id } }, res, next) => {
@@ -134,74 +134,69 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
     const updatedFields = {};
     for (prop in parsedRequest) {
       if (parsedRequest[prop] !== item[prop] && parsedRequest[prop] !== null) {
-        console.log("HELLO?");
         updatedFields[prop] = parsedRequest[prop];
       }
     }
-    console.log(updatedFields);
     if (Object.keys(updatedFields).length === 0) {
       return res.status(200).json({
+        success: true,
         message: "Done- No update needed!",
       });
     }
-
     let newItem = await Item.findOneAndUpdate({ _id: id }, updatedFields, {
       new: true,
       useFindAndModify: false,
     });
 
     return res.status(200).json({
+      success: true,
       message: "Update successful!",
-      item: newItem,
+      results: newItem,
     });
   } catch (error) {
-    res.status(500).json({
-      error: err,
-    });
+    return errorStatus(res, error);
   }
 };
-exports.addCategoriesToExistingItem = (
+
+exports.addCategoriesToExistingItem = async (
   { body: { id, newCategories } },
   res,
   next
 ) => {
   try {
-    const item = await Item.findById(id);
-    item.categories.push(...newCategories);
+    const item = item.categories.push(...newCategories);
     await item.save();
     asyncForEach(newCategories, async (categoryId) => {
-      await addItemToCategory(categoryId, item.id);
+      await addItemToCategory(categoryId, id);
+      await addCategoryToItem(categoryId, id);
     });
 
     return res.status(200).json({
-      message: "Update successful!",
-      item: item,
+      success: true,
+      result: await Item.findById(id),
     });
   } catch (error) {
-    res.status(500).json({
-      error: err,
-    });
+    return errorStatus(res, error);
   }
 };
 exports.deleteItem = async ({ body: { id } }, res, next) => {
   try {
     // find item
     const item = await Item.findById(id);
+
     asyncForEach(item.categories, async (category) => {
       await removeItemFromCategory(category._id, item._id);
     });
 
     // return results
-    let i = await item.remove();
-    console.log("I", i);
+    let deletedItem = await item.remove();
 
     res.status(200).json({
-      completed: result,
+      success: true,
+      message: "Item deleted",
+      results: deletedItem,
     });
-  } catch (err) {
-    return res.status(400).json({
-      error: err.toString(),
-      status: 400,
-    });
+  } catch (error) {
+    return errorStatus(res, error);
   }
 };

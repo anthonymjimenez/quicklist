@@ -13,7 +13,7 @@ const addItemToCategory = (categoryId, itemId) => {
   );
 };
 
-const addCategoryToItem = (itemId, categoryId) => {
+const addCategoryToItem = (categoryId, itemId) => {
   return Item.findByIdAndUpdate(
     itemId,
     { $push: { categories: categoryId } },
@@ -25,6 +25,14 @@ const removeItemFromCategory = (categoryId, itemId) => {
   return Category.findByIdAndUpdate(
     categoryId,
     { $pull: { items: { _id: itemId } } },
+    { useFindAndModify: false }
+  );
+};
+
+const removeCategoryFromItem = (categoryId, itemId) => {
+  return Item.findByIdAndUpdate(
+    itemId,
+    { $pull: { category: { _id: itemId } } },
     { useFindAndModify: false }
   );
 };

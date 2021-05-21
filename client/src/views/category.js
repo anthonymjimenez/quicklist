@@ -4,13 +4,14 @@ import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
 import AddItemFromCategory from "../components/add-item-from-category";
 import ErrorMessage from "../components/error-message";
+import { IoPencilSharp } from "react-icons/io5";
 
 const Category = () => {
   let { id } = useParams();
   let { categories, itemError, clearErrors } = useContext(ItemContext);
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");
-
+  let [edit, setEdit] = useState(false);
   useEffect(() => {
     let found = categories.find((cat) => {
       return cat._id === id;
@@ -33,6 +34,9 @@ const Category = () => {
       <ErrorMessage message={message} />
       Category: {category?.title}
       <ItemList items={category?.items} />
+      <button onClick={() => (edit ? setEdit(false) : setEdit(true))}>
+        <IoPencilSharp />
+      </button>
     </>
   );
 };
