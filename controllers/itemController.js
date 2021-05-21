@@ -2,7 +2,11 @@ let {
   parsers: { parseFromAmazon, uniParser },
 } = require("../utils/parsers");
 let {
-  updateEntries: { addItemToCategory, removeItemFromCategory },
+  updateEntries: {
+    addItemToCategory,
+    removeItemFromCategory,
+    addCategoryToItem,
+  },
 } = require("../utils/updateEntries");
 let { errorStatus } = require("../utils/errors");
 let { filterByUser } = require("../utils/users");
@@ -159,26 +163,51 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
 };
 
 exports.addCategoriesToExistingItem = async (
-  { body: { id, newCategories } },
+  { body: { id, categories } },
   res,
   next
 ) => {
   try {
-    const item = item.categories.push(...newCategories);
-    await item.save();
-    asyncForEach(newCategories, async (categoryId) => {
-      await addItemToCategory(categoryId, id);
+    var item = await Item.findById(id);
+    console.log(item);
+    item.categories.push(...categories);
+    asyncForEach(categories, async (categoryId) => {
       await addCategoryToItem(categoryId, id);
     });
-
+    await item.save();
     return res.status(200).json({
       success: true,
-      result: await Item.findById(id),
+      result: item,
     });
   } catch (error) {
     return errorStatus(res, error);
   }
 };
+
+exports.removeCategoriesFromExistingItem = async (
+  { body: { id, categories } },
+  res,
+  next
+) => {
+  try {
+    var item = await Item.findById(id);
+    console.log(item.categories, categories);
+    item.categories = item.categories.filter(
+      (cat) => !categories.some((c) => c == cat)
+    );
+    asyncForEach(categories, async (categoryId) => {
+      await removeItemFromCategory(categoryId, id);
+    });
+    await item.save();
+    return res.status(200).json({
+      success: true,
+      result: item,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
+};
+
 exports.deleteItem = async ({ body: { id } }, res, next) => {
   try {
     // find item

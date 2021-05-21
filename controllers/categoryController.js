@@ -33,15 +33,9 @@ exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
       title,
       createdBy: user_id,
     });
-
-    newCategory.save(async function (err) {
-      if (err) {
-        return res.status(400).json({
-          error: err.toString(),
-          status: 400,
-        });
-      }
-    });
+    let error = newCategory.validateSync();
+    if (error) throw error;
+    await newCategory.save();
 
     return res.status(200).json({
       completed: true,
@@ -85,24 +79,23 @@ exports.deleteCategory = async ({ body: { id } }, res, next) => {
   }
 };
 
-exports.removeItemFromExistingCategory = async (
-  { body: { id, removedItems } },
-  res,
-  next
-) => {
-  try {
-    const Category = await Category.findById(id);
-    item.categories.push(...newCategories);
-    await item.save();
-    asyncForEach(newCategories, async (categoryId) => {
-      await addItemToCategory(categoryId, item.id);
-    });
+// exports.removeItemFromExistingCategory = async (
+//   { body: { id, removedItems } },
+//   res,
+//   next
+// ) => {
+//   try {
+//     const Category = await Category.findById(id);
 
-    return res.status(200).json({
-      message: "Update successful!",
-      item: item,
-    });
-  } catch (error) {
-    return errorStatus(res, error);
-  }
-};
+//     asyncForEach(newCategories, async (categoryId) => {
+//       await addItemToCategory(categoryId, item.id);
+//     });
+
+//     return res.status(200).json({
+//       message: "Update successful!",
+//       item: item,
+//     });
+//   } catch (error) {
+//     return errorStatus(res, error);
+//   }
+// };
