@@ -32,7 +32,7 @@ const removeItemFromCategory = (categoryId, itemId) => {
 const removeCategoryFromItem = (categoryId, itemId) => {
   return Item.findByIdAndUpdate(
     itemId,
-    { $pull: { category: { _id: itemId } } },
+    { $pull: { category: { _id: categoryId } } },
     { useFindAndModify: false }
   );
 };
@@ -41,4 +41,5 @@ exports.updateEntries = {
   addItemToCategory,
   addCategoryToItem,
   removeItemFromCategory,
+  removeCategoryFromItem,
 };

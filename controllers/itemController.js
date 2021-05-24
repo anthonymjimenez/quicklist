@@ -144,7 +144,7 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
     if (Object.keys(updatedFields).length === 0) {
       return res.status(200).json({
         success: true,
-        message: "Done- No update needed!",
+        message: "Done- No update was needed!",
       });
     }
     let newItem = await Item.findOneAndUpdate({ _id: id }, updatedFields, {
@@ -191,9 +191,9 @@ exports.removeCategoriesFromExistingItem = async (
 ) => {
   try {
     var item = await Item.findById(id);
-    console.log(item.categories, categories);
     item.categories = item.categories.filter(
-      (cat) => !categories.some((c) => c == cat)
+      (itemCategory) =>
+        !categories.some((categoryToRemove) => itemCategory == categoryToRemove)
     );
     asyncForEach(categories, async (categoryId) => {
       await removeItemFromCategory(categoryId, id);
@@ -201,7 +201,7 @@ exports.removeCategoriesFromExistingItem = async (
     await item.save();
     return res.status(200).json({
       success: true,
-      result: item,
+      results: item,
     });
   } catch (error) {
     return errorStatus(res, error);

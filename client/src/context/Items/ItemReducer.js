@@ -21,6 +21,16 @@ const ItemReducer = (state, action) => {
           return category;
         }),
       };
+    case "UPDATE_ITEM":
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          if (item._id === action.payload._id) {
+            item = action.payload;
+          }
+          return item;
+        }),
+      };
     case "FIND_UPDATED_CATEGORIES":
       return {
         ...state,

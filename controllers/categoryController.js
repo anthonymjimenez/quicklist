@@ -79,23 +79,23 @@ exports.deleteCategory = async ({ body: { id } }, res, next) => {
   }
 };
 
-// exports.removeItemFromExistingCategory = async (
-//   { body: { id, removedItems } },
-//   res,
-//   next
-// ) => {
-//   try {
-//     const Category = await Category.findById(id);
+exports.removeItemFromExistingCategory = async (
+  { body: { id, removedItems } },
+  res,
+  next
+) => {
+  try {
+    const Category = await Category.findById(id);
 
-//     asyncForEach(newCategories, async (categoryId) => {
-//       await addItemToCategory(categoryId, item.id);
-//     });
+    // asyncForEach(newCategories, async (categoryId) => {
+    //   await addItemToCategory(categoryId, item.id);
+    // });
 
-//     return res.status(200).json({
-//       message: "Update successful!",
-//       item: item,
-//     });
-//   } catch (error) {
-//     return errorStatus(res, error);
-//   }
-// };
+    return res.status(200).json({
+      message: "Update successful!",
+      item: item,
+    });
+  } catch (error) {
+    return errorStatus(res, error);
+  }
+};
