@@ -1,17 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
-import { Form, Media, Input, Button } from "reactstrap";
-import {
-  IoReloadCircleSharp,
-  IoPencilSharp,
-  IoPaperPlaneSharp,
-  IoTrashSharp,
-  IoAddSharp,
-} from "react-icons/io5";
 import EditItemForm from "../containers/edit-item-form";
 import ItemShow from "../components/item-show";
 import ItemModal from "./item-modals";
+import ItemIcons from "../containers/item-icons";
 const Item = () => {
   let { id } = useParams();
   let { items } = useContext(ItemContext);
@@ -37,27 +30,8 @@ const Item = () => {
         <EditItemForm item={item} setEdit={setEdit} />
       )}
       {modal && <ItemModal setModal={setModal} modal={modal} />}
-      <div>
-        <>
-          <IoReloadCircleSharp />
-        </>
-        <button onClick={() => (edit ? setEdit(false) : setEdit(true))}>
-          <IoPencilSharp />
-        </button>
-        <button
-          onClick={() => {
-            setModal(true);
-          }}
-        >
-          <IoAddSharp />
-        </button>
-        <a href={item?.url} rel="noreferrer" target="_blank">
-          <IoPaperPlaneSharp />
-        </a>
-        <>
-          <IoTrashSharp />
-        </>
-      </div>
+
+      <ItemIcons setEdit={setEdit} setModal={setModal} item={item} />
     </div>
   );
 };

@@ -21,7 +21,7 @@ const ItemReducer = (state, action) => {
           return category;
         }),
       };
-    case "UPDATE_ITEM":
+    case "UPDATE_ITEMS":
       return {
         ...state,
         items: state.items.map((item) => {
@@ -51,14 +51,16 @@ const ItemReducer = (state, action) => {
     case "UPDATE_CATEGORIES":
       return {
         ...state,
-        categories: state.categories.map((category) =>
-          category.items.map((item) => {
+        categories: state.categories.map((category) => {
+          let newCat = category.items.map((item) => {
             if (item._id === action.payload._id) {
               item = action.payload;
             }
             return item;
-          })
-        ),
+          });
+          category.items = newCat;
+          return category;
+        }),
       };
     case "FIND_ONE_CATEGORY":
       return {

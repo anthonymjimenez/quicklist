@@ -87,14 +87,13 @@ export const ItemProvider = ({ children }) => {
         ...item,
         headers: headers(),
       });
-      console.log(item.categories);
       dispatch({
         type: "POST_ITEM",
         payload: response.data.results,
       });
       dispatch({
         type: "FIND_UPDATED_CATEGORIES",
-        payload: item.categories,
+        payload: response.data,
       });
     } catch (error) {
       console.log(error);
@@ -105,6 +104,28 @@ export const ItemProvider = ({ children }) => {
       );
     }
   }
+
+  async function updateItem(id, update) {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/v1/items`, {
+        id: id,
+        updates: update,
+        header: headers(),
+      });
+      console.log(response);
+      dispatch({
+        type: "UPDATE_ITEMS",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "UPDATE_CATEGORIES",
+        payload: response.data.results,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // categories
   async function getCategories(sub) {
     try {
@@ -162,6 +183,7 @@ export const ItemProvider = ({ children }) => {
         newlyUpdatedCategories: state.newlyUpdatedCategories,
         getItems,
         getPublicItem,
+        updateItem,
         clearErrors,
         getCategories,
         postNewCategory,

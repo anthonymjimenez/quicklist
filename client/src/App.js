@@ -11,8 +11,7 @@ import ProtectedRoute from "./auth/protected-route";
 
 const App = () => {
   const { isLoading, user = null } = useAuth0();
-  const { getCategories, getItems, categories, items } =
-    useContext(ItemContext);
+  const { getCategories, getItems } = useContext(ItemContext);
 
   useEffect(() => {
     if (user) {

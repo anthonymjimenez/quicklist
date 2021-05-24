@@ -120,7 +120,7 @@ exports.update = async ({ body: { id, updates } }, res, next) => {
     return res.status(200).json({
       success: true,
       message: "Update successful!",
-      item: newItem,
+      results: newItem,
     });
   } catch (error) {
     return errorStatus(res, error);
