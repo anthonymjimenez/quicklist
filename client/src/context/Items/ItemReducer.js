@@ -31,6 +31,12 @@ const ItemReducer = (state, action) => {
           return item;
         }),
       };
+    case "DELETE_ITEM": {
+      return {
+        ...state,
+        items: state.items.filter((item) => item._id !== action.payload._id),
+      };
+    }
     case "FIND_UPDATED_CATEGORIES":
       return {
         ...state,
@@ -48,23 +54,27 @@ const ItemReducer = (state, action) => {
         ...state,
         categories: [action.payload, ...state.categories],
       };
-    case "UPDATE_CATEGORIES":
+    case "UPDATE_CATEGORY_ITEMS":
       return {
         ...state,
         categories: state.categories.map((category) => {
-          let newCat = category.items.map((item) => {
-            if (item._id === action.payload._id) {
-              item = action.payload;
-            }
-            return item;
-          });
-          category.items = newCat;
-          return category;
+          let newCat = category;
+          newCat.items = newCat.items.map((item) =>
+            item._id === action.payload._id ? action.payload : item
+          );
+          return newCat;
         }),
       };
-    case "FIND_ONE_CATEGORY":
+    case "DELETE_CATEGORY_ITEMS":
       return {
         ...state,
+        categories: state.categories.map((category) => {
+          let newCat = category;
+          newCat.items = newCat.items.filter(
+            (category) => category._id !== action.payload._id
+          );
+          return newCat;
+        }),
       };
     default:
       return state;

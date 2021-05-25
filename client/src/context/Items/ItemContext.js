@@ -53,7 +53,6 @@ export const ItemProvider = ({ children }) => {
           headers: headers(),
         }
       );
-      console.log(response.data.results, "RESPONSE");
       dispatch({
         type: "GET_ITEMS",
         payload: response.data.results,
@@ -93,7 +92,7 @@ export const ItemProvider = ({ children }) => {
       });
       dispatch({
         type: "FIND_UPDATED_CATEGORIES",
-        payload: response.data,
+        payload: item.categories,
       });
     } catch (error) {
       console.log(error);
@@ -118,7 +117,7 @@ export const ItemProvider = ({ children }) => {
         payload: response.data.results,
       });
       dispatch({
-        type: "UPDATE_CATEGORIES",
+        type: "UPDATE_CATEGORY_ITEMS",
         payload: response.data.results,
       });
     } catch (error) {
@@ -126,6 +125,23 @@ export const ItemProvider = ({ children }) => {
     }
   }
 
+  async function deleteItem(id) {
+    try {
+      const response = await axios.delete(`${serverUrl}/api/v1/items`, {
+        header: headers(),
+      });
+      dispatch({
+        type: "DELETE_ITEM",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "DELETE_CATEGORY_ITEMS",
+        payload: response.data.results,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   // categories
   async function getCategories(sub) {
     try {
@@ -184,6 +200,7 @@ export const ItemProvider = ({ children }) => {
         getItems,
         getPublicItem,
         updateItem,
+        deleteItem,
         clearErrors,
         getCategories,
         postNewCategory,
