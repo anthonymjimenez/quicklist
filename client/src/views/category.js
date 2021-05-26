@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
-import AddItemFromCategory from "../components/add-item-from-category";
+import AddItemFromCategory from "../forms/add-item-from-category";
 import ErrorMessage from "../components/error-message";
 import { IoPencilSharp } from "react-icons/io5";
 

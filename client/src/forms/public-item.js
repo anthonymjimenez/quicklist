@@ -1,7 +1,7 @@
 import { Button, Form } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useState, useContext } from "react";
-import CreateItem from "./create-item";
+import CreateItem from "../form-components/create-item";
 
 const PublicItem = () => {
   let [url, setUrl] = useState("");

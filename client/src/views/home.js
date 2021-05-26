@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Media } from "reactstrap";
 import ItemCard from "../components/item-card";
-import PublicItem from "../components/public-item";
+import PublicItem from "../forms/public-item";
 import { ItemContext } from "../context/Items/ItemContext";
 
 const Home = () => {

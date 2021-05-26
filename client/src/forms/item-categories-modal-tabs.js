@@ -1,10 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-import CreateItemTab from "./create-item-tab";
-import CreateCategoryTab from "./create-category-tab";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import ErrorMessage from "../components/error-message";
-const ItemForm = () => {
+import { useState, useEffect, useContext } from "react";
+
+const ItemCategoriesModalTabs = () => {
   const [activeTab, setActiveTab] = useState("1");
   const { itemError, clearErrors } = useContext(ItemContext);
   const [message, setMessage] = useState("");
@@ -25,7 +24,7 @@ const ItemForm = () => {
             className={activeTab === "1" ? "active" : ""}
             onClick={() => setActiveTab("1")}
           >
-            Add Item
+            Add Item To Categories
           </NavLink>
         </NavItem>
         <NavItem>
@@ -33,16 +32,16 @@ const ItemForm = () => {
             className={activeTab === "2" ? "active" : ""}
             onClick={() => setActiveTab("2")}
           >
-            Add QuickList
+            Remove Item From Categories
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <CreateItemTab clearErrors={clearErrors} />
+          <> Add Item </>
         </TabPane>
         <TabPane tabId="2">
-          <CreateCategoryTab clearErrors={clearErrors} />
+          <> Remove Item</>{" "}
         </TabPane>
       </TabContent>
       <ErrorMessage message={message} />
@@ -50,4 +49,4 @@ const ItemForm = () => {
   );
 };
 
-export default ItemForm;
+export default ItemCategoriesModalTabs;

@@ -1,4 +1,4 @@
-import ItemForm from "../containers/item-form";
+import ItemForm from "../forms/create-form-tabs";
 import { ItemContext } from "../context/Items/ItemContext";
 import React, { useContext, useEffect } from "react";
 import CategoryList from "../containers/category-list";

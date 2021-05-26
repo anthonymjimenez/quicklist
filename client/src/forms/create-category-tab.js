@@ -2,7 +2,7 @@ import { Button, Form } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useState, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import CreateCategory from "../components/create-category";
+import CreateCategory from "../form-components/create-category";
 
 const CreateCategoryTab = ({ clearErrors }) => {
   const {

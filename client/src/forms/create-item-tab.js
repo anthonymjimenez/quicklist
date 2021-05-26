@@ -2,11 +2,13 @@ import { Button, Form } from "reactstrap";
 import { useState, useContext } from "react";
 import { ItemContext } from "../context/Items/ItemContext";
 import { useAuth0 } from "@auth0/auth0-react";
-import CreateItem from "./create-item";
+import AddCategories from "../form-components/add-categories";
+import CreateItem from "../form-components/create-item";
 
-const AddItemFromCategory = ({ category = null, clearErrors }) => {
+const CreateItemTab = ({ category = null, clearErrors }) => {
+  let [categoryArray, setCategories] = useState([]);
   let [url, setUrl] = useState("");
-  const { postItem } = useContext(ItemContext);
+  const { categories, postItem } = useContext(ItemContext);
   let {
     user: { sub },
   } = useAuth0();
@@ -14,19 +16,22 @@ const AddItemFromCategory = ({ category = null, clearErrors }) => {
   let post = (e) => {
     e.preventDefault();
     clearErrors();
+
+    let category_ids = categoryArray.map(({ _id }) => _id);
+
     postItem({
       url: url,
       user_id: sub,
-      categories: [category._id],
+      categories: category_ids,
     });
-    console.log("cle");
   };
   return (
     <Form onSubmit={(e) => post(e)}>
       <CreateItem setUrl={setUrl} />
+      <AddCategories categories={categories} setCategories={setCategories} />
       <Button>Submit</Button>
     </Form>
   );
 };
 
-export default AddItemFromCategory;
+export default CreateItemTab;
