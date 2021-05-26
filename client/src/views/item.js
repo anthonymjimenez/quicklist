@@ -6,15 +6,16 @@ import ItemShow from "../components/item-show";
 import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
 import DeleteItemModal from "../modals/delete-item-modal";
+import { Badge } from "reactstrap";
 const Item = () => {
   let { id } = useParams();
-  let { items } = useContext(ItemContext);
+  let { items, categories } = useContext(ItemContext);
   let [edit, setEdit] = useState(false);
-  let [item, setItem] = useState(true);
+  let [item, setItem] = useState([]);
+  let [itemCategories, setItemCategories] = useState([]);
   let [itemCategoriesModal, setItemCategoriesModal] = useState(false);
   let [deleteItemModal, setDeleteItemModal] = useState(false);
   useEffect(() => {
-    console.log(items.map((el) => el));
     let found = items.find(({ _id }) => _id === id);
     if (items.length === 0) {
       setItem(false);
@@ -22,7 +23,11 @@ const Item = () => {
 
     setItem(found);
     console.log(id, items);
-  }, [items, id]);
+
+    setItemCategories(
+      categories.filter((cat) => item?.categories?.includes(cat._id))
+    );
+  }, [items, id, item]);
 
   return (
     <div>
@@ -45,6 +50,9 @@ const Item = () => {
           itemId={item._id}
         />
       )}
+      {itemCategories.map((category) => (
+        <Badge>{category.title}</Badge>
+      ))}
       <ItemIcons
         setEdit={setEdit}
         setDeleteItemModal={setDeleteItemModal}

@@ -12,10 +12,6 @@ const Category = () => {
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");
   let [edit, setEdit] = useState(false);
-  // useEffect(() => {
-  //   clearErrors();
-  //   setMessage("");
-  // }, []);
 
   useEffect(() => {
     let found = categories.find((cat) => {
@@ -34,7 +30,6 @@ const Category = () => {
 
   return (
     <>
-      {console.log("category", category)}
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
       Category: {category?.title}

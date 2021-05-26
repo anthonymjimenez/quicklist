@@ -17,12 +17,10 @@ const CreateItemTab = ({ category = null, clearErrors }) => {
     e.preventDefault();
     clearErrors();
 
-    let category_ids = categoryArray.map(({ _id }) => _id);
-
     postItem({
       url: url,
       user_id: sub,
-      categories: category_ids,
+      categories: categoryArray,
     });
   };
   return (

@@ -2,7 +2,9 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import ErrorMessage from "../components/error-message";
 import { useState, useEffect, useContext } from "react";
-import AddCategoriesItemTab from "./add-categories-item-tab";
+import AddItemCategoriesTab from "./add-item-categories-tab";
+import RemoveItemCategoriesTab from "./remove-item-categories-tab";
+// CONSIDER making add-item-categories-tab && remove-item-categories-tab into one component
 
 const ItemCategoriesModalTabs = ({ item }) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -39,10 +41,10 @@ const ItemCategoriesModalTabs = ({ item }) => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <AddCategoriesItemTab item={item} clearErrors={clearErrors} />
+          <AddItemCategoriesTab item={item} clearErrors={clearErrors} />
         </TabPane>
         <TabPane tabId="2">
-          <> Remove Item</>{" "}
+          <RemoveItemCategoriesTab item={item} clearErrors />
         </TabPane>
       </TabContent>
       <ErrorMessage message={message} />
