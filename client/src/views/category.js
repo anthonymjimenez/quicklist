@@ -13,6 +13,11 @@ const Category = () => {
   let [message, setMessage] = useState("");
   let [edit, setEdit] = useState(false);
   useEffect(() => {
+    clearErrors();
+    setMessage("");
+  }, []);
+
+  useEffect(() => {
     let found = categories.find((cat) => {
       return cat._id === id;
     });

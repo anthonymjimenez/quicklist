@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ItemContext } from "../context/Items/ItemContext";
 import EditItemForm from "../containers/edit-item-form";
 import ItemShow from "../components/item-show";
-import ItemModal from "./item-modals";
+import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
 const Item = () => {
   let { id } = useParams();

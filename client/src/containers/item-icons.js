@@ -5,7 +5,11 @@ import {
   IoTrashSharp,
   IoAddSharp,
 } from "react-icons/io5";
-const ItemIcons = ({ setEdit, setModal, item }) => {
+import { useHistory } from "react-router-dom";
+
+const ItemIcons = ({ setEdit, setEtcModal, setDeleteModal, item }) => {
+  let history = useHistory();
+
   return (
     <div>
       <>
@@ -20,7 +24,7 @@ const ItemIcons = ({ setEdit, setModal, item }) => {
       </button>
       <button
         onClick={() => {
-          setModal(true);
+          setEtcModal(true);
         }}
       >
         <IoAddSharp />
@@ -28,9 +32,14 @@ const ItemIcons = ({ setEdit, setModal, item }) => {
       <a href={item?.url} rel="noreferrer" target="_blank">
         <IoPaperPlaneSharp />
       </a>
-      <>
+      <button
+        onClick={() => {
+          setDeleteModal(true);
+          history.goBack();
+        }}
+      >
         <IoTrashSharp />
-      </>
+      </button>
     </div>
   );
 };

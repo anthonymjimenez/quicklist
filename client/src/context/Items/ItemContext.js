@@ -128,6 +128,7 @@ export const ItemProvider = ({ children }) => {
   async function deleteItem(id) {
     try {
       const response = await axios.delete(`${serverUrl}/api/v1/items`, {
+        id: id,
         header: headers(),
       });
       dispatch({

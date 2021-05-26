@@ -9,6 +9,10 @@ const ItemForm = () => {
   const { itemError, clearErrors } = useContext(ItemContext);
   const [message, setMessage] = useState("");
   useEffect(() => {
+    clearErrors();
+    setMessage("");
+  }, []);
+  useEffect(() => {
     itemError.id === "POST_CATEGORY_ERROR" || itemError.id === "POST_ITEM_ERROR"
       ? setMessage(itemError.message)
       : setMessage(false);
