@@ -5,11 +5,8 @@ import {
   IoTrashSharp,
   IoAddSharp,
 } from "react-icons/io5";
-import { useHistory } from "react-router-dom";
 
-const ItemIcons = ({ setEdit, setEtcModal, setDeleteModal, item }) => {
-  let history = useHistory();
-
+const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
   return (
     <div>
       <>
@@ -24,7 +21,7 @@ const ItemIcons = ({ setEdit, setEtcModal, setDeleteModal, item }) => {
       </button>
       <button
         onClick={() => {
-          setEtcModal(true);
+          setItemModal(true);
         }}
       >
         <IoAddSharp />
@@ -34,8 +31,7 @@ const ItemIcons = ({ setEdit, setEtcModal, setDeleteModal, item }) => {
       </a>
       <button
         onClick={() => {
-          setDeleteModal(true);
-          history.goBack();
+          setDeleteItemModal(true);
         }}
       >
         <IoTrashSharp />

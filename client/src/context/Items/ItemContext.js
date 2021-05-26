@@ -127,10 +127,12 @@ export const ItemProvider = ({ children }) => {
 
   async function deleteItem(id) {
     try {
-      const response = await axios.delete(`${serverUrl}/api/v1/items`, {
-        id: id,
-        header: headers(),
-      });
+      const response = await axios.delete(
+        `${serverUrl}/api/v1/items?user=${id}`,
+        {
+          header: headers(),
+        }
+      );
       dispatch({
         type: "DELETE_ITEM",
         payload: response.data.results,
@@ -140,6 +142,7 @@ export const ItemProvider = ({ children }) => {
         payload: response.data.results,
       });
     } catch (error) {
+      console.log("HELLO");
       console.error(error);
     }
   }

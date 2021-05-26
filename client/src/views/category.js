@@ -12,10 +12,10 @@ const Category = () => {
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");
   let [edit, setEdit] = useState(false);
-  useEffect(() => {
-    clearErrors();
-    setMessage("");
-  }, []);
+  // useEffect(() => {
+  //   clearErrors();
+  //   setMessage("");
+  // }, []);
 
   useEffect(() => {
     let found = categories.find((cat) => {

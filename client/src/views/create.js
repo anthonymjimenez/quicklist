@@ -5,9 +5,6 @@ import CategoryList from "../containers/category-list";
 const Create = () => {
   const { newlyUpdatedCategories } = useContext(ItemContext);
 
-  useEffect(() => {
-    console.log("new updates", newlyUpdatedCategories);
-  }, [newlyUpdatedCategories]);
   return (
     <>
       <h3>Add new Item</h3>

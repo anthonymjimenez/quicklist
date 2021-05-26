@@ -8,10 +8,7 @@ const ItemForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const { itemError, clearErrors } = useContext(ItemContext);
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    clearErrors();
-    setMessage("");
-  }, []);
+
   useEffect(() => {
     itemError.id === "POST_CATEGORY_ERROR" || itemError.id === "POST_ITEM_ERROR"
       ? setMessage(itemError.message)

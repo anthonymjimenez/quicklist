@@ -5,12 +5,14 @@ import EditItemForm from "../containers/edit-item-form";
 import ItemShow from "../components/item-show";
 import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
+import DeleteItemModal from "../modals/delete-item-modal";
 const Item = () => {
   let { id } = useParams();
   let { items } = useContext(ItemContext);
   let [edit, setEdit] = useState(false);
   let [item, setItem] = useState(true);
-  let [modal, setModal] = useState(false);
+  let [itemCategoriesModal, setItemCategoriesModal] = useState(false);
+  let [deleteItemModal, setDeleteItemModal] = useState(false);
   useEffect(() => {
     console.log(items.map((el) => el));
     let found = items.find(({ _id }) => _id === id);
@@ -29,9 +31,25 @@ const Item = () => {
       ) : (
         <EditItemForm item={item} setEdit={setEdit} />
       )}
-      {modal && <ItemModal setModal={setModal} modal={modal} />}
-
-      <ItemIcons setEdit={setEdit} setModal={setModal} item={item} />
+      {itemCategoriesModal && (
+        <ItemModal
+          setModal={setItemCategoriesModal}
+          modal={itemCategoriesModal}
+        />
+      )}
+      {deleteItemModal && (
+        <DeleteItemModal
+          setModal={setDeleteItemModal}
+          modal={deleteItemModal}
+          itemId={item._id}
+        />
+      )}
+      <ItemIcons
+        setEdit={setEdit}
+        setDeleteItemModal={setDeleteItemModal}
+        setItemModal={setItemCategoriesModal}
+        item={item}
+      />
     </div>
   );
 };
