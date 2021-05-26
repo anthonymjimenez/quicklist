@@ -33,6 +33,7 @@ const Item = () => {
       )}
       {itemCategoriesModal && (
         <ItemModal
+          item={item}
           setModal={setItemCategoriesModal}
           modal={itemCategoriesModal}
         />

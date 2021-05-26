@@ -1,16 +1,17 @@
 import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import ItemCategoriesModalTabs from "../forms/item-categories-modal-tabs";
 
 const ItemModal = ({ setModal, modal, item }) => {
   const toggle = () => setModal(false);
 
   return (
     <div>
+      {console.log(item)}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Tabs will be here soon</ModalHeader>
         <ModalBody>
-          One tab will be the ability to add to categories
-          <br /> The other will be to create a sharable link!
+          <ItemCategoriesModalTabs item={item} />
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

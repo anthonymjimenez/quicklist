@@ -6,7 +6,7 @@ const AddCategories = ({ categories, setCategories }) => (
     <Label for="categories">Quick Lists</Label>
 
     <Multiselect
-      onSelect={setCategories}
+      onSelect={(e) => setCategories(e.target.value._id)}
       onRemove={setCategories}
       placeholder={""}
       options={categories} // clean up categories, title is now required
