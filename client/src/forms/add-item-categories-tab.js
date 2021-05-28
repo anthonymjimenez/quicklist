@@ -7,15 +7,17 @@ import AddCategories from "../form-components/add-categories";
 
 const AddItemCategoriesTab = ({ item, clearErrors }) => {
   let [categoryArray, setCategories] = useState();
-  const { categories } = useContext(ItemContext);
+  const { categories, modifyItemCategories } = useContext(ItemContext);
 
   let post = (e) => {
     e.preventDefault();
-    console.log(categoryArray);
-    // addCategoriesToItem({
-    //   item_id: item_.id ,
-    //   categories: category_ids,
-    // });
+    modifyItemCategories(
+      {
+        item_id: item._id,
+        categories: categoryArray,
+      },
+      "addCategories"
+    );
   };
   return (
     <Form onSubmit={(e) => post(e)}>

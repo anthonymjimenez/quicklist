@@ -3,17 +3,20 @@ import { useState, useContext } from "react";
 import { ItemContext } from "../context/Items/ItemContext";
 import AddCategories from "../form-components/add-categories";
 
-const RemoveItemCategoriesTab = ({ item, clearErrors }) => {
+const RemoveItemCategoriesTab = ({ item }) => {
   let [categoryArray, setCategories] = useState();
-  const { categories /* removeItemCategories */ } = useContext(ItemContext);
+  const { categories, modifyItemCategories } = useContext(ItemContext);
 
   let post = (e) => {
     e.preventDefault();
     console.log(categoryArray);
-    // removeItemCategories({
-    //   item_id: item_.id ,
-    //   categories: category_ids,
-    // });
+    modifyItemCategories(
+      {
+        item_id: item._id,
+        categories: categoryArray,
+      },
+      "removeCategories"
+    );
   };
   return (
     <Form onSubmit={(e) => post(e)}>

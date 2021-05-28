@@ -29,6 +29,17 @@ export const ItemProvider = ({ children }) => {
       "Content-Type": "application/json;charset=UTF-8",
     };
   }
+  //utils
+  function updates(results) {
+    dispatch({
+      type: "UPDATE_ITEMS",
+      payload: results,
+    });
+    dispatch({
+      type: "UPDATE_CATEGORY_ITEMS",
+      payload: results,
+    });
+  }
   //errors
   function returnErrors(message, status, id) {
     // ??? dispatch/return
@@ -111,15 +122,7 @@ export const ItemProvider = ({ children }) => {
         updates: update,
         header: headers(),
       });
-      console.log(response);
-      dispatch({
-        type: "UPDATE_ITEMS",
-        payload: response.data.results,
-      });
-      dispatch({
-        type: "UPDATE_CATEGORY_ITEMS",
-        payload: response.data.results,
-      });
+      updates(response.data.results);
     } catch (error) {
       console.error(error);
     }
@@ -146,6 +149,18 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
+  async function modifyItemCategories(updates, path) {
+    try {
+      let response = axios.patch(`${serverUrl}/api/v1/items/${path}`, {
+        ...updates,
+        headers: headers(),
+      });
+      updates(response.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // categories
   async function getCategories(sub) {
     try {
@@ -173,7 +188,6 @@ export const ItemProvider = ({ children }) => {
         ...category,
         headers: headers(),
       });
-      console.log(response);
       dispatch({
         type: "POST_CATEGORY",
         payload: response.data.results,
@@ -205,6 +219,7 @@ export const ItemProvider = ({ children }) => {
         getPublicItem,
         updateItem,
         deleteItem,
+        modifyItemCategories,
         clearErrors,
         getCategories,
         postNewCategory,
