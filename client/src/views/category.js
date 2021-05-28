@@ -32,7 +32,7 @@ const Category = () => {
     <>
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
-      Category: {category?.title}
+      <h1> Category: {category?.title} </h1>
       <ItemList items={category?.items} />
       <button onClick={() => (edit ? setEdit(false) : setEdit(true))}>
         <IoPencilSharp />

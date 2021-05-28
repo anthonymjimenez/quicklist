@@ -6,7 +6,8 @@ import ItemShow from "../components/item-show";
 import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
 import DeleteItemModal from "../modals/delete-item-modal";
-import { Badge } from "reactstrap";
+import ItemCategoriesList from "../containers/item-categories-list";
+
 const Item = () => {
   let { id } = useParams();
   let { items, categories } = useContext(ItemContext);
@@ -51,9 +52,7 @@ const Item = () => {
           itemId={item._id}
         />
       )}
-      {itemCategories.map((category) => (
-        <Badge>{category.title}</Badge>
-      ))}
+      <ItemCategoriesList itemCategories={itemCategories} />
       <ItemIcons
         setEdit={setEdit}
         setDeleteItemModal={setDeleteItemModal}

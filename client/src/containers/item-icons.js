@@ -4,6 +4,7 @@ import {
   IoPaperPlaneSharp,
   IoTrashSharp,
   IoAddSharp,
+  IoShareSocialOutline,
 } from "react-icons/io5";
 
 const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
@@ -35,6 +36,9 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
         }}
       >
         <IoTrashSharp />
+      </button>
+      <button>
+        <IoShareSocialOutline />
       </button>
     </div>
   );
