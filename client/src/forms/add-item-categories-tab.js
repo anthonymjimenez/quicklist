@@ -1,23 +1,18 @@
-import { Form } from "reactstrap";
+import { Form, Button } from "reactstrap";
 import { useState, useContext } from "react";
-import { Button } from "reactstrap";
-
 import { ItemContext } from "../context/Items/ItemContext";
 import AddCategories from "../form-components/add-categories";
 
-const AddItemCategoriesTab = ({ item, clearErrors }) => {
+const AddItemCategoriesTab = ({ item }) => {
   let [categoryArray, setCategories] = useState();
-  const { categories, modifyItemCategories } = useContext(ItemContext);
+  const { categories, addItemCategories } = useContext(ItemContext);
 
   let post = (e) => {
     e.preventDefault();
-    modifyItemCategories(
-      {
-        item_id: item._id,
-        categories: categoryArray,
-      },
-      "addCategories"
-    );
+    addItemCategories({
+      id: item._id,
+      categories: categoryArray,
+    });
   };
   return (
     <Form onSubmit={(e) => post(e)}>

@@ -21,11 +21,11 @@ const addCategoryToItem = (categoryId, itemId) => {
   );
 };
 
-const removeItemFromCategory = (categoryId, itemId) => {
+const removeItemFromCategory = async (categoryId, itemId) => {
   return Category.findByIdAndUpdate(
     categoryId,
-    { $pull: { items: { _id: itemId } } },
-    { useFindAndModify: false }
+    { $pull: { items: itemId } },
+    { new: true, useFindAndModify: false }
   );
 };
 

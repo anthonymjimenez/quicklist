@@ -7,6 +7,7 @@ const Categories = () => {
 
   return (
     <div>
+      {console.log(categories)}
       <CategoryList categories={categories} />
     </div>
   );

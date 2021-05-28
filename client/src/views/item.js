@@ -31,6 +31,7 @@ const Item = () => {
 
   return (
     <div>
+      {console.log(itemCategories)}
       {!edit ? (
         <ItemShow item={item} />
       ) : (

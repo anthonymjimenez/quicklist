@@ -172,12 +172,12 @@ exports.addCategoriesToExistingItem = async (
     console.log(item);
     item.categories.push(...categories);
     asyncForEach(categories, async (categoryId) => {
-      await addCategoryToItem(categoryId, id);
+      await addItemToCategory(categoryId, id);
     });
     await item.save();
     return res.status(200).json({
       success: true,
-      result: item,
+      results: item,
     });
   } catch (error) {
     return errorStatus(res, error);

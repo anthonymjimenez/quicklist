@@ -65,6 +65,37 @@ const ItemReducer = (state, action) => {
           return newCat;
         }),
       };
+    case "ADD_ITEM_TO_CATEGORIES":
+      return {
+        ...state,
+        categories: state.categories.map((category) => {
+          let newCat = category;
+          if (action.payload.categories.includes(category._id)) {
+            newCat.items.push(action.payload.results);
+          }
+          return newCat;
+        }),
+      };
+
+    case "REMOVE_ITEM_FROM_CATEGORIES":
+      return {
+        ...state,
+        categories: state.categories.map((category) => {
+          let newCat = category;
+          console.log(action.payload.categories);
+          newCat.items = newCat.items.filter((item) => {
+            if (
+              action.payload.categories.includes(category._id) &&
+              item._id === action.payload.results._id
+            ) {
+              return false;
+            }
+            return true;
+          });
+          console.log(newCat);
+          return newCat;
+        }),
+      };
     case "DELETE_CATEGORY_ITEMS":
       return {
         ...state,

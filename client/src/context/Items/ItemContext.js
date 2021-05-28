@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { errorState } from "../Errors/ErrorContext";
 import ErrorReducer from "../Errors/ErrorReducer";
+import { createPortal } from "react-dom";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
@@ -30,7 +31,8 @@ export const ItemProvider = ({ children }) => {
     };
   }
   //utils
-  function updates(results) {
+  function updateDispatch(results) {
+    console.log(results);
     dispatch({
       type: "UPDATE_ITEMS",
       payload: results,
@@ -122,7 +124,15 @@ export const ItemProvider = ({ children }) => {
         updates: update,
         header: headers(),
       });
-      updates(response.data.results);
+
+      dispatch({
+        type: "UPDATE_ITEMS",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "UPDATE_CATEGORY_ITEMS",
+        payload: response.data.results,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -149,13 +159,51 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
-  async function modifyItemCategories(updates, path) {
+  async function addItemCategories(updates) {
     try {
-      let response = axios.patch(`${serverUrl}/api/v1/items/${path}`, {
-        ...updates,
-        headers: headers(),
+      let response = await axios.patch(
+        `${serverUrl}/api/v1/items/addCategories`,
+        {
+          ...updates,
+          headers: headers(),
+        }
+      );
+      dispatch({
+        type: "UPDATE_ITEMS",
+        payload: response.data.results,
       });
-      updates(response.data.results);
+      dispatch({
+        type: "ADD_ITEM_TO_CATEGORIES",
+        payload: {
+          results: response.data.results,
+          categories: updates.categories,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async function removeItemCategories(updates) {
+    try {
+      let response = await axios.patch(
+        `${serverUrl}/api/v1/items/removeCategories`,
+        {
+          ...updates,
+          headers: headers(),
+        }
+      );
+      console.log(response);
+      dispatch({
+        type: "UPDATE_ITEMS",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "REMOVE_ITEM_FROM_CATEGORIES",
+        payload: {
+          results: response.data.results,
+          categories: updates.categories,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -179,7 +227,6 @@ export const ItemProvider = ({ children }) => {
       // returnErrors(error.response.data.error, error.response.data.status);
       console.error(error);
     }
-    console.log(sub);
   }
 
   async function postNewCategory(category) {
@@ -219,7 +266,8 @@ export const ItemProvider = ({ children }) => {
         getPublicItem,
         updateItem,
         deleteItem,
-        modifyItemCategories,
+        addItemCategories,
+        removeItemCategories,
         clearErrors,
         getCategories,
         postNewCategory,
