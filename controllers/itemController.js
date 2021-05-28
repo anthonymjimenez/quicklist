@@ -144,6 +144,7 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
     if (Object.keys(updatedFields).length === 0) {
       return res.status(200).json({
         success: true,
+        update: false,
         message: "Done- No update was needed!",
       });
     }
@@ -154,6 +155,7 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
 
     return res.status(200).json({
       success: true,
+      update: true,
       message: "Update successful!",
       results: newItem,
     });

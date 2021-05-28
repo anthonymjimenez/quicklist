@@ -11,8 +11,10 @@ import { createPortal } from "react-dom";
 const initialState = {
   publicItem: false,
   items: [],
+  loading: false,
   categories: [],
   newlyUpdatedCategories: [],
+  successMessage: false,
 };
 
 export const ItemContext = createContext(initialState);
@@ -30,18 +32,7 @@ export const ItemProvider = ({ children }) => {
       "Content-Type": "application/json;charset=UTF-8",
     };
   }
-  //utils
-  function updateDispatch(results) {
-    console.log(results);
-    dispatch({
-      type: "UPDATE_ITEMS",
-      payload: results,
-    });
-    dispatch({
-      type: "UPDATE_CATEGORY_ITEMS",
-      payload: results,
-    });
-  }
+
   //errors
   function returnErrors(message, status, id) {
     // ??? dispatch/return
@@ -137,7 +128,27 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
-
+  async function autoUpdateItem(id) {
+    try {
+      dispatch({ type: "IS_LOADING" });
+      const response = await axios.patch(`${serverUrl}/api/v1/items/auto`, {
+        id: id,
+        header: headers(),
+      });
+      console.log(response.data);
+      response.data.update
+        ? dispatch({
+            type: "UPDATE_ITEMS",
+            payload: response.data.results,
+          })
+        : dispatch({
+            type: "NO_UPDATE_NEEDED",
+            payload: response.data.message,
+          });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   async function deleteItem(id) {
     try {
       const response = await axios.delete(
@@ -262,11 +273,14 @@ export const ItemProvider = ({ children }) => {
         itemError: errState,
         publicItem: state.publicItem,
         newlyUpdatedCategories: state.newlyUpdatedCategories,
+        loading: state.loading,
+        successMessage: state.successMessage,
         getItems,
         getPublicItem,
         updateItem,
         deleteItem,
         addItemCategories,
+        autoUpdateItem,
         removeItemCategories,
         clearErrors,
         getCategories,

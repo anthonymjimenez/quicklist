@@ -8,6 +8,10 @@ const ItemShow = ({ item }) => {
         {console.log(item)}
         {item?.title} (${item?.price}){" "}
       </h2>
+      <h5>
+        Item is currently{" "}
+        {item?.availability ? <> in stock </> : <> out of stock </>}
+      </h5>
       <br />
       <div style={{ width: "90%" }}>
         <Media

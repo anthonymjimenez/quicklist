@@ -7,15 +7,22 @@ import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
 import DeleteItemModal from "../modals/delete-item-modal";
 import ItemCategoriesList from "../containers/item-categories-list";
+import Loading from "../components/loading";
 
 const Item = () => {
   let { id } = useParams();
-  let { items, categories } = useContext(ItemContext);
+  let { items, categories, loading } = useContext(ItemContext);
   let [edit, setEdit] = useState(false);
   let [item, setItem] = useState([]);
   let [itemCategories, setItemCategories] = useState([]);
   let [itemCategoriesModal, setItemCategoriesModal] = useState(false);
   let [deleteItemModal, setDeleteItemModal] = useState(false);
+  // useEffect =>
+  // if autoUpdate true and loading is false
+  // then set a message
+  // else set message to false
+  // dependencies loading
+
   useEffect(() => {
     let found = items.find(({ _id }) => _id === id);
     if (items.length === 0) {
@@ -53,6 +60,8 @@ const Item = () => {
         />
       )}
       <ItemCategoriesList itemCategories={itemCategories} />
+
+      <Loading loading={loading} />
       <ItemIcons
         setEdit={setEdit}
         setDeleteItemModal={setDeleteItemModal}

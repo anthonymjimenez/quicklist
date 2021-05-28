@@ -21,9 +21,22 @@ const ItemReducer = (state, action) => {
           return category;
         }),
       };
+    case "IS_LOADING": {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case "NO_UPDATE_NEEDED": {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
     case "UPDATE_ITEMS":
       return {
         ...state,
+        loading: false,
         items: state.items.map((item) => {
           if (item._id === action.payload._id) {
             item = action.payload;
