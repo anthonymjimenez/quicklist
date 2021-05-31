@@ -40,6 +40,8 @@ const Item = () => {
   return (
     <div>
       {console.log(itemCategories)}
+      <Loading loading={loading} />
+
       {!edit ? (
         <ItemShow item={item} />
       ) : (
@@ -61,7 +63,6 @@ const Item = () => {
       )}
       <ItemCategoriesList itemCategories={itemCategories} />
 
-      <Loading loading={loading} />
       <ItemIcons
         setEdit={setEdit}
         setDeleteItemModal={setDeleteItemModal}

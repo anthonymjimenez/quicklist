@@ -11,11 +11,12 @@ import { ItemContext } from "../context/Items/ItemContext";
 
 const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
   let { autoUpdateItem } = useContext(ItemContext);
-
+  //
   return (
     <div>
       <button
         onClick={() => {
+          // autoUpdate(true)
           autoUpdateItem(item._id);
         }}
       >

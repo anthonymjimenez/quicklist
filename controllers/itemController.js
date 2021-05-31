@@ -136,18 +136,15 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
         : await uniParser(item.url);
 
     const updatedFields = {};
-    for (prop in parsedRequest) {
-      if (parsedRequest[prop] !== item[prop] && parsedRequest[prop] !== null) {
-        updatedFields[prop] = parsedRequest[prop];
-      }
-    }
-    if (Object.keys(updatedFields).length === 0) {
-      return res.status(200).json({
-        success: true,
-        update: false,
-        message: "Done- No update was needed!",
-      });
-    }
+    updatedFields.availability = parsedRequest.availability;
+    updatedFields.price = parsedRequest.price;
+    // if (Object.keys(updatedFields).length === 0) {
+    //   return res.status(200).json({
+    //     success: true,
+    //     update: false,
+    //     message: "Done- No update was needed!",
+    //   });
+    // }
     let newItem = await Item.findOneAndUpdate({ _id: id }, updatedFields, {
       new: true,
       useFindAndModify: false,
