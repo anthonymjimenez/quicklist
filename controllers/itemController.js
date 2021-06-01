@@ -137,7 +137,9 @@ exports.autoUpdate = async ({ body: { id } }, res, next) => {
 
     const updatedFields = {};
     updatedFields.availability = parsedRequest.availability;
-    updatedFields.price = parsedRequest.price;
+    if (parsedRequest.price) {
+      updatedFields.price = parsedRequest.price;
+    }
     // if (Object.keys(updatedFields).length === 0) {
     //   return res.status(200).json({
     //     success: true,
