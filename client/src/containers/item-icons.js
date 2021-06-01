@@ -1,7 +1,6 @@
 import {
   IoReloadCircleSharp,
   IoPencilSharp,
-  IoPaperPlaneSharp,
   IoTrashSharp,
   IoAddSharp,
   IoShareSocialOutline,
@@ -36,9 +35,7 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
       >
         <IoAddSharp />
       </button>
-      <a href={item?.url} rel="noreferrer" target="_blank">
-        <IoPaperPlaneSharp />
-      </a>
+
       <button
         onClick={() => {
           setDeleteItemModal(true);
