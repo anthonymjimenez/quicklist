@@ -39,12 +39,31 @@ const ItemReducer = (state, action) => {
         items: state.items.filter((item) => item._id !== action.payload._id),
       };
     }
-    case "REMOVE_CATEGORY_FROM_ITEMS": {
+    case "UPDATE_ITEM_CATEGORIES":
       return {
         ...state,
-        items: [],
+        items: state.items.map((item) => {
+          let newItem = item;
+          newItem.categories = newItem.categories.map((category) =>
+            category._id === action.payload._id ? action.payload : category
+          );
+          return newItem;
+        }),
       };
-    }
+    // case "REMOVE_CATEGORY_FROM_ITEMS": {
+    //   return {
+    //     ...state,
+    //     items: state.items.map((item) => {
+    //       let newItem = item;
+    //       newItem.categories = newItem.categories.filter(( category) => {
+    //        if( action.payload.items.includes(item._id) && category._id === action.payload.results._id) {
+    //          rety
+    //        }
+    //       })
+
+    //     }),
+    //   };
+    // }
     case "NO_UPDATE_NEEDED": {
       return {
         ...state,

@@ -4,6 +4,7 @@ let { errorStatus } = require("../utils/errors");
 let {
   updateEntries: { removeCategoryFromItem },
 } = require("../utils/updateEntries");
+
 exports.getCategoryItems = async ({ query: { user } }, res, next) => {
   try {
     const userCategories = filterByUser(await Category.find(), user);
@@ -45,7 +46,7 @@ exports.postCategory = async ({ body: { title, user_id } }, res, next) => {
     return errorStatus(res, error);
   }
 };
-exports.update = async ({ body: { id, updates } }, res, next) => {
+exports.updateCategory = async ({ body: { id, updates } }, res, next) => {
   try {
     let newCategory = await Category.findOneAndUpdate({ _id: id }, updates, {
       new: true,
@@ -53,7 +54,7 @@ exports.update = async ({ body: { id, updates } }, res, next) => {
     });
     return res.status(200).json({
       message: "Update successful!",
-      item: newCategory,
+      results: newCategory,
     });
   } catch (error) {
     return errorStatus(res, error);
@@ -64,7 +65,7 @@ exports.deleteCategory = async ({ body: { id } }, res, next) => {
   try {
     // find item
     const category = await Category.findById(id);
-    asyncForEach(category.items, async (category) => {
+    asyncForEach(category.items, async (item) => {
       await removeCategoryFromItem(category._id, item._id);
     });
 
@@ -79,18 +80,21 @@ exports.deleteCategory = async ({ body: { id } }, res, next) => {
   }
 };
 
-exports.removeItemFromExistingCategory = async (
+exports.removeItemsFromExistingCategory = async (
   { body: { id, removedItems } },
   res,
   next
 ) => {
   try {
-    const Category = await Category.findById(id);
+    const category = await Category.findById(id);
 
     // asyncForEach(newCategories, async (categoryId) => {
     //   await addItemToCategory(categoryId, item.id);
     // });
 
+    asyncForEach(removeItems, async (item) => {
+      await removeCategoryFromItem(category._id, item._id);
+    });
     return res.status(200).json({
       message: "Update successful!",
       item: item,

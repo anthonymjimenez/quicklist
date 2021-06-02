@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getCategoryItems,
   postCategory,
-  update,
+  updateCategory,
   deleteCategory,
 } = require("../controllers/categoryController");
 const { checkJwt } = require("../utils/checkJwt");
@@ -12,7 +12,7 @@ router
   .route("/")
   .get(getCategoryItems)
   .post(postCategory)
-  .patch(update)
+  .patch(updateCategory)
   .delete(deleteCategory);
 
 module.exports = router;

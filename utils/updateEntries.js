@@ -32,7 +32,7 @@ const removeItemFromCategory = async (categoryId, itemId) => {
 const removeCategoryFromItem = (categoryId, itemId) => {
   return Item.findByIdAndUpdate(
     itemId,
-    { $pull: { category: { _id: categoryId } } },
+    { $pull: { categories: categoryId } },
     { useFindAndModify: false }
   );
 };

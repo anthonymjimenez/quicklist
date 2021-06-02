@@ -4,7 +4,8 @@ import { ItemContext } from "../context/Items/ItemContext";
 import ItemList from "../containers/item-list";
 import AddItemFromCategory from "../forms/add-item-from-category";
 import ErrorMessage from "../components/error-message";
-import { IoPencilSharp } from "react-icons/io5";
+import CategoryIcons from "../containers/category-icons";
+import EditCategoryForm from "../forms/edit-category-form";
 
 const Category = () => {
   let { id } = useParams();
@@ -32,11 +33,19 @@ const Category = () => {
     <>
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
-      <h1> Category: {category?.title} </h1>
+
+      <h1>
+        {" "}
+        Category:{" "}
+        {edit ? (
+          <EditCategoryForm category={category} setEdit={setEdit} />
+        ) : (
+          <> {category?.title} </>
+        )}{" "}
+      </h1>
+      <CategoryIcons setEdit={setEdit} />
+
       <ItemList items={category?.items} />
-      <button onClick={() => (edit ? setEdit(false) : setEdit(true))}>
-        <IoPencilSharp />
-      </button>
     </>
   );
 };

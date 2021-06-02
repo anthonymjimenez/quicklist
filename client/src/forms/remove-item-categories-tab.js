@@ -4,7 +4,7 @@ import { ItemContext } from "../context/Items/ItemContext";
 import AddCategories from "../form-components/add-categories";
 
 const RemoveItemCategoriesTab = ({ item }) => {
-  let [categoryArray, setCategories] = useState();
+  let [categoryArray, setCategories] = useState([]);
   const { categories, removeItemCategories } = useContext(ItemContext);
 
   let post = (e) => {

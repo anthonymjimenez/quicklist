@@ -97,6 +97,10 @@ export const ItemProvider = ({ children }) => {
         payload: response.data.results,
       });
       categoryDispatch({
+        type: "POST_ITEM",
+        payload: response.data.results,
+      });
+      categoryDispatch({
         type: "FIND_UPDATED_CATEGORIES",
         payload: item.categories,
       });
@@ -160,7 +164,7 @@ export const ItemProvider = ({ children }) => {
   async function deleteItem(id) {
     try {
       const response = await axios.delete(
-        `${serverUrl}/api/v1/items?user=${id}`,
+        `${serverUrl}/api/v1/items?item=${id}`,
         {
           header: headers(),
         }
@@ -267,6 +271,27 @@ export const ItemProvider = ({ children }) => {
       // returnErrors(error.response.data.error, error.response.data.status, "POST_CATEGORY_ERROR")
     }
   }
+
+  async function updateCategory(id, update) {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/v1/categories`, {
+        id: id,
+        updates: update,
+        header: headers(),
+      });
+      console.log(response);
+      categoryDispatch({
+        type: "UPDATE_CATEGORY",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "UPDATE_ITEM_CATEGORIES",
+        payload: response.data.results,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   // dispatch({
   //   type: "FIND_ONE_CATEGORY",
   //   payload: found,
@@ -292,6 +317,7 @@ export const ItemProvider = ({ children }) => {
         clearErrors,
         getCategories,
         postNewCategory,
+        updateCategory,
         postItem,
       }}
     >

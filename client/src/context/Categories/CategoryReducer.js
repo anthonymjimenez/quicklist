@@ -22,7 +22,7 @@ const CategoryReducer = (state, action) => {
         ...state,
         categories: state.categories.map((category) => {
           if (category._id === action.payload._id) {
-            category = action.payload;
+            category.title = action.payload.title;
           }
           return category;
         }),
@@ -65,16 +65,11 @@ const CategoryReducer = (state, action) => {
         ...state,
         categories: state.categories.map((category) => {
           let newCat = category;
-          console.log(action.payload.categories);
-          newCat.items = newCat.items.filter((item) => {
-            if (
-              action.payload.categories.includes(category._id) &&
+          newCat.items = newCat.items.filter(
+            (item) =>
+              !action.payload.categories.includes(category._id) &&
               item._id === action.payload.results._id
-            ) {
-              return false;
-            }
-            return true;
-          });
+          );
           console.log(newCat);
           return newCat;
         }),
