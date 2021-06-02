@@ -1,10 +1,11 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import ItemReducer from "./ItemReducer";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { errorState } from "../Errors/ErrorContext";
 import ErrorReducer from "../Errors/ErrorReducer";
-import { createPortal } from "react-dom";
+import { categoryState as catState } from "../Categories/CategoryContext";
+import CategoryReducer from "../Categories/CategoryReducer";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
@@ -12,9 +13,6 @@ const initialState = {
   publicItem: false,
   items: [],
   loading: false,
-  categories: [],
-  newlyUpdatedCategories: [],
-  successMessage: false,
 };
 
 export const ItemContext = createContext(initialState);
@@ -24,6 +22,10 @@ export const ItemProvider = ({ children }) => {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [state, dispatch] = useReducer(ItemReducer, initialState);
   const [errState, errDispatch] = useReducer(ErrorReducer, errorState);
+  const [categoryState, categoryDispatch] = useReducer(
+    CategoryReducer,
+    catState
+  );
   async function headers() {
     const token = await getAccessTokenSilently();
     return {
@@ -94,7 +96,7 @@ export const ItemProvider = ({ children }) => {
         type: "POST_ITEM",
         payload: response.data.results,
       });
-      dispatch({
+      categoryDispatch({
         type: "FIND_UPDATED_CATEGORIES",
         payload: item.categories,
       });
@@ -120,7 +122,7 @@ export const ItemProvider = ({ children }) => {
         type: "UPDATE_ITEMS",
         payload: response.data.results,
       });
-      dispatch({
+      categoryDispatch({
         type: "UPDATE_CATEGORY_ITEMS",
         payload: response.data.results,
       });
@@ -136,15 +138,21 @@ export const ItemProvider = ({ children }) => {
         header: headers(),
       });
       console.log(response.data);
-      response.data.update
-        ? dispatch({
-            type: "UPDATE_ITEMS",
-            payload: response.data.results,
-          })
-        : dispatch({
-            type: "NO_UPDATE_NEEDED",
-            payload: response.data.message,
-          });
+      if (response.data.update) {
+        dispatch({
+          type: "UPDATE_ITEMS",
+          payload: response.data.results,
+        });
+        categoryDispatch({
+          type: "UPDATE_CATEGORY_ITEMS",
+          payload: response.data.results,
+        });
+      } else {
+        dispatch({
+          type: "NO_UPDATE_NEEDED",
+          payload: response.data.message,
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -161,7 +169,7 @@ export const ItemProvider = ({ children }) => {
         type: "DELETE_ITEM",
         payload: response.data.results,
       });
-      dispatch({
+      categoryDispatch({
         type: "DELETE_CATEGORY_ITEMS",
         payload: response.data.results,
       });
@@ -183,7 +191,7 @@ export const ItemProvider = ({ children }) => {
         type: "UPDATE_ITEMS",
         payload: response.data.results,
       });
-      dispatch({
+      categoryDispatch({
         type: "ADD_ITEM_TO_CATEGORIES",
         payload: {
           results: response.data.results,
@@ -208,7 +216,7 @@ export const ItemProvider = ({ children }) => {
         type: "UPDATE_ITEMS",
         payload: response.data.results,
       });
-      dispatch({
+      categoryDispatch({
         type: "REMOVE_ITEM_FROM_CATEGORIES",
         payload: {
           results: response.data.results,
@@ -230,7 +238,7 @@ export const ItemProvider = ({ children }) => {
         }
       );
 
-      dispatch({
+      categoryDispatch({
         type: "GET_CATEGORIES",
         payload: response.data.results,
       });
@@ -246,12 +254,11 @@ export const ItemProvider = ({ children }) => {
         ...category,
         headers: headers(),
       });
-      dispatch({
+      categoryDispatch({
         type: "POST_CATEGORY",
         payload: response.data.results,
       });
     } catch (error) {
-      console.log(error.response.data.status);
       returnErrors(
         error?.response.data.error,
         error?.response.data.status,
@@ -269,10 +276,10 @@ export const ItemProvider = ({ children }) => {
     <ItemContext.Provider
       value={{
         items: state.items,
-        categories: state.categories,
+        categories: categoryState.categories,
         itemError: errState,
         publicItem: state.publicItem,
-        newlyUpdatedCategories: state.newlyUpdatedCategories,
+        newlyUpdatedCategories: categoryState.newlyUpdatedCategories,
         loading: state.loading,
         successMessage: state.successMessage,
         getItems,

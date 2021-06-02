@@ -10,7 +10,6 @@ const EditItemForm = ({ item, setEdit }) => {
   return (
     <Form
       onSubmit={(e) => {
-        console.log("why");
         e.preventDefault();
         updateItem(item._id, {
           description: description,
