@@ -316,28 +316,6 @@ export const ItemProvider = ({ children }) => {
     } catch (error) {}
   }
 
-  // async function removeItemsFromCategory(id, items) {
-  //   try {
-  //     const response = await axios.delete(
-  //       `${serverUrl}/api/v1/items?itemId=${id}`,
-  //       {
-  //         header: headers(),
-  //       }
-  //     );
-  //     categoryDispatch({
-  //       type: "DELETE_ITEMS_IN_CATEGORY",
-  //       payload: {items: items, results: response.data.results}
-  //     });
-  //     dispatch({
-  //       type: "REMOVE_CATEGORY_FROM_ITEMS",
-  //       payload: {
-  //         items: items,
-  //         results: response.data.results,
-  //       },
-  //     });
-  //   } catch (error) {}
-  // }
-
   return (
     <ItemContext.Provider
       value={{

@@ -35,7 +35,6 @@ const Category = () => {
     <>
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
-
       <h1>
         {" "}
         Category:{" "}

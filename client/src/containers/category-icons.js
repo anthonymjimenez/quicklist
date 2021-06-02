@@ -19,21 +19,10 @@ const CategoryIcons = ({ setEdit, setCategoryModal, setDeleteModal }) => {
       </button>
       <button
         onClick={() => {
-          setCategoryModal(true);
-        }}
-      >
-        <IoAddSharp />
-      </button>
-
-      <button
-        onClick={() => {
           setDeleteModal(true);
         }}
       >
         <IoTrashSharp />
-      </button>
-      <button>
-        <IoShareSocialOutline />
       </button>
     </div>
   );
