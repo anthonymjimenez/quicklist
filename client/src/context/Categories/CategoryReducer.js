@@ -39,7 +39,7 @@ const CategoryReducer = (state, action) => {
           return newCat;
         }),
       };
-    case "ADD_ITEM_TO_CATEGORIES":
+    case "ADD_ITEM_TO_CATEGORIES": // could be used for view/category adds?
       return {
         ...state,
         categories: state.categories.map((category) => {
@@ -60,21 +60,24 @@ const CategoryReducer = (state, action) => {
           return category;
         }),
       };
-    case "REMOVE_ITEM_FROM_CATEGORIES":
+    case "REMOVE_ITEM_FROM_CATEGORIES": //removing categories from item
       return {
         ...state,
         categories: state.categories.map((category) => {
           let newCat = category;
-          newCat.items = newCat.items.filter(
-            (item) =>
-              !action.payload.categories.includes(category._id) &&
+          newCat.items = newCat.items.filter((item) => {
+            if (
+              action.payload.categories.includes(category._id) &&
               item._id === action.payload.results._id
-          );
-          console.log(newCat);
+            ) {
+              return false;
+            }
+            return true;
+          });
           return newCat;
         }),
       };
-    case "DELETE_CATEGORY_ITEMS":
+    case "DELETE_CATEGORY_ITEMS": // when item is deleted
       return {
         ...state,
         categories: state.categories.map((category) => {
@@ -83,6 +86,27 @@ const CategoryReducer = (state, action) => {
             (category) => category._id !== action.payload._id
           );
           return newCat;
+        }),
+      };
+    case "DELETE_CATEGORY":
+      return {
+        ...state,
+        categories: state.categories.filter(
+          (category) => category._id !== action.payload._id
+        ),
+      };
+    case "DELETE_ITEMS_IN_CATEGORY": // while removing items from existing category
+      return {
+        ...state,
+        categories: state.categories.map((category) => {
+          if (category._id === action.payload.results.category._id) {
+            let newCat = category;
+            newCat.items = newCat.items.filter(
+              (item) => !action.payload.items.includes(item._id)
+            );
+            return newCat;
+          }
+          return category;
         }),
       };
     default:

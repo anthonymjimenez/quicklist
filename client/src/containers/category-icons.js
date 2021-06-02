@@ -6,11 +6,7 @@ import {
 } from "react-icons/io5";
 import React from "react";
 
-const CategoryIcons = ({
-  setEdit,
-  setCategoryModal,
-  setDeleteCategoryModal,
-}) => {
+const CategoryIcons = ({ setEdit, setCategoryModal, setDeleteModal }) => {
   //
   return (
     <div>
@@ -31,7 +27,7 @@ const CategoryIcons = ({
 
       <button
         onClick={() => {
-          setDeleteCategoryModal(true);
+          setDeleteModal(true);
         }}
       >
         <IoTrashSharp />

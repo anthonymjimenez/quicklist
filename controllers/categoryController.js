@@ -5,6 +5,11 @@ let {
   updateEntries: { removeCategoryFromItem },
 } = require("../utils/updateEntries");
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 exports.getCategoryItems = async ({ query: { user } }, res, next) => {
   try {
     const userCategories = filterByUser(await Category.find(), user);
@@ -61,19 +66,19 @@ exports.updateCategory = async ({ body: { id, updates } }, res, next) => {
   }
 };
 
-exports.deleteCategory = async ({ body: { id } }, res, next) => {
+exports.deleteCategory = async ({ query: { categoryId } }, res, next) => {
   try {
     // find item
-    const category = await Category.findById(id);
+    const category = await Category.findById(categoryId);
     asyncForEach(category.items, async (item) => {
-      await removeCategoryFromItem(category._id, item._id);
+      await removeCategoryFromItem(category._id, item);
     });
 
     // return results
     let deletedCategory = await category.remove();
-
+    console.log(deletedCategory, "deleted");
     res.status(200).json({
-      completed: deletedCategory,
+      results: deletedCategory,
     });
   } catch (error) {
     return errorStatus(res, error);
@@ -92,7 +97,7 @@ exports.removeItemsFromExistingCategory = async (
     //   await addItemToCategory(categoryId, item.id);
     // });
 
-    asyncForEach(removeItems, async (item) => {
+    asyncForEach(removedItems, async (item) => {
       await removeCategoryFromItem(category._id, item._id);
     });
     return res.status(200).json({

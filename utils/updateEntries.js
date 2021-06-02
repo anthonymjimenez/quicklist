@@ -29,7 +29,7 @@ const removeItemFromCategory = async (categoryId, itemId) => {
   );
 };
 
-const removeCategoryFromItem = (categoryId, itemId) => {
+const removeCategoryFromItem = async (categoryId, itemId) => {
   return Item.findByIdAndUpdate(
     itemId,
     { $pull: { categories: categoryId } },

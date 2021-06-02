@@ -50,20 +50,25 @@ const ItemReducer = (state, action) => {
           return newItem;
         }),
       };
-    // case "REMOVE_CATEGORY_FROM_ITEMS": {
-    //   return {
-    //     ...state,
-    //     items: state.items.map((item) => {
-    //       let newItem = item;
-    //       newItem.categories = newItem.categories.filter(( category) => {
-    //        if( action.payload.items.includes(item._id) && category._id === action.payload.results._id) {
-    //          rety
-    //        }
-    //       })
-
-    //     }),
-    //   };
-    // }
+    case "REMOVE_CATEGORY_FROM_ITEMS": {
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          let newItem = item;
+          newItem.categories = newItem.categories.filter((category) => {
+            if (
+              action.payload.items.includes(item._id) &&
+              category._id === action.payload.results._id
+            ) {
+              return false;
+            } else {
+              return true;
+            }
+          });
+          return newItem;
+        }),
+      };
+    }
     case "NO_UPDATE_NEEDED": {
       return {
         ...state,

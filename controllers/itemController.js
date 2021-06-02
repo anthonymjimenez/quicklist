@@ -209,12 +209,13 @@ exports.removeCategoriesFromExistingItem = async (
   }
 };
 
-exports.deleteItem = async ({ query: { item } }, res, next) => {
+exports.deleteItem = async ({ query: { itemId } }, res, next) => {
   try {
     // find item
-    const item = await Item.findById(item);
+    const item = await Item.findById(itemId);
 
     asyncForEach(item.categories, async (category) => {
+      console.log("CATEOGRY", category);
       await removeItemFromCategory(category._id, item._id);
     });
 

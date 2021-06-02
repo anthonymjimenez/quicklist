@@ -164,7 +164,7 @@ export const ItemProvider = ({ children }) => {
   async function deleteItem(id) {
     try {
       const response = await axios.delete(
-        `${serverUrl}/api/v1/items?item=${id}`,
+        `${serverUrl}/api/v1/items?itemId=${id}`,
         {
           header: headers(),
         }
@@ -292,10 +292,51 @@ export const ItemProvider = ({ children }) => {
       console.error(error);
     }
   }
-  // dispatch({
-  //   type: "FIND_ONE_CATEGORY",
-  //   payload: found,
-  // });
+
+  async function deleteCategory(id) {
+    try {
+      const response = await axios.delete(
+        `${serverUrl}/api/v1/categories?categoryId=${id}`,
+        {
+          header: headers(),
+        }
+      );
+
+      categoryDispatch({
+        type: "DELETE_CATEGORY",
+        payload: response.data.results,
+      });
+      dispatch({
+        type: "REMOVE_CATEGORY_FROM_ITEMS",
+        payload: {
+          items: response.data.results.items,
+          results: response.data.results,
+        },
+      });
+    } catch (error) {}
+  }
+
+  // async function removeItemsFromCategory(id, items) {
+  //   try {
+  //     const response = await axios.delete(
+  //       `${serverUrl}/api/v1/items?itemId=${id}`,
+  //       {
+  //         header: headers(),
+  //       }
+  //     );
+  //     categoryDispatch({
+  //       type: "DELETE_ITEMS_IN_CATEGORY",
+  //       payload: {items: items, results: response.data.results}
+  //     });
+  //     dispatch({
+  //       type: "REMOVE_CATEGORY_FROM_ITEMS",
+  //       payload: {
+  //         items: items,
+  //         results: response.data.results,
+  //       },
+  //     });
+  //   } catch (error) {}
+  // }
 
   return (
     <ItemContext.Provider
@@ -314,11 +355,12 @@ export const ItemProvider = ({ children }) => {
         addItemCategories,
         autoUpdateItem,
         removeItemCategories,
+        postItem,
         clearErrors,
         getCategories,
         postNewCategory,
         updateCategory,
-        postItem,
+        deleteCategory,
       }}
     >
       {children}
