@@ -10,7 +10,8 @@ import DeleteCategoryModal from "../modals/delete-category-modal";
 
 const Category = () => {
   let { id } = useParams();
-  let { categories, itemError, clearErrors } = useContext(ItemContext);
+  let { categories, itemError, clearErrors, addItemsToCategory } =
+    useContext(ItemContext);
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");
   let [edit, setEdit] = useState(false);

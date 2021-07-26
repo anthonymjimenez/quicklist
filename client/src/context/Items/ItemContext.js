@@ -316,6 +316,12 @@ export const ItemProvider = ({ children }) => {
     } catch (error) {}
   }
 
+  async function addItemsToCategory(id) {
+    categoryDispatch({
+      type: "ADD_ITEMS_TO_CATEGORY",
+      payload: { items: ["609d93d0d34e6427d5f3a476"], categoryId: id },
+    });
+  }
   return (
     <ItemContext.Provider
       value={{
@@ -330,6 +336,7 @@ export const ItemProvider = ({ children }) => {
         getPublicItem,
         updateItem,
         deleteItem,
+        addItemsToCategory,
         addItemCategories,
         autoUpdateItem,
         removeItemCategories,

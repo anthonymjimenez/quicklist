@@ -215,7 +215,6 @@ exports.deleteItem = async ({ query: { itemId } }, res, next) => {
     const item = await Item.findById(itemId);
 
     asyncForEach(item.categories, async (category) => {
-      console.log("CATEOGRY", category);
       await removeItemFromCategory(category._id, item._id);
     });
 

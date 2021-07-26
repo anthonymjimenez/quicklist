@@ -35,6 +35,7 @@ const MainNav = () => (
     >
       Quick Lists
     </NavLink>
+    {/* add about page  */}
   </div>
 );
 

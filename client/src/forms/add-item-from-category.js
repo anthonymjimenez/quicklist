@@ -6,6 +6,7 @@ import CreateItem from "../form-components/create-item";
 
 const AddItemFromCategory = ({ category = null, clearErrors }) => {
   let [url, setUrl] = useState("");
+
   const { postItem } = useContext(ItemContext);
   let {
     user: { sub },
@@ -19,7 +20,6 @@ const AddItemFromCategory = ({ category = null, clearErrors }) => {
       user_id: sub,
       categories: [category._id],
     });
-    console.log("cle");
   };
   return (
     <Form onSubmit={(e) => post(e)}>
