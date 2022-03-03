@@ -61,7 +61,7 @@ export const ItemProvider = ({ children }) => {
       );
       dispatch({
         type: "GET_ITEMS",
-        payload: response.data.results,
+        payload: response.data.results.reverse(),
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);

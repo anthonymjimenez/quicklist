@@ -1,3 +1,5 @@
+import ItemCategoriesModalTabs from "../../forms/item-categories-modal-tabs";
+
 const CategoryReducer = (state, action) => {
   switch (action.type) {
     case "FIND_UPDATED_CATEGORIES":
@@ -10,7 +12,11 @@ const CategoryReducer = (state, action) => {
     case "GET_CATEGORIES":
       return {
         ...state,
-        categories: action.payload,
+        categories: action.payload.map((cat) => {
+          // reversing results from API so they display from new to old
+          cat.items.reverse();
+          return cat;
+        }),
       };
     case "POST_CATEGORY":
       return {
@@ -39,7 +45,7 @@ const CategoryReducer = (state, action) => {
           return newCat;
         }),
       };
-    case "ADD_ITEM_TO_CATEGORIES": // could be used for view/category adds?
+    case "ADD_ITEM_TO_CATEGORIES": // ADDS EXISTING ITEMS TO EXISTING CATEGORIES
       return {
         ...state,
         categories: state.categories.map((category) => {
@@ -47,17 +53,20 @@ const CategoryReducer = (state, action) => {
           if (action.payload.categories.includes(category._id)) {
             newCat.items.push(action.payload.results);
           }
+
           return newCat;
         }),
       };
-    case "POST_ITEM":
+    case "POST_ITEM": // POSTS NEW ITEMS TO EXISTING CATEGORIES
       return {
         ...state,
         categories: state.categories.map((category) => {
           if (action.payload.categories.includes(category._id)) {
             category.items.push(action.payload);
           }
-          return category;
+          let reverseItemsInCategory = category;
+          reverseItemsInCategory.items.reverse();
+          return reverseItemsInCategory;
         }),
       };
     case "REMOVE_ITEM_FROM_CATEGORIES": //removing categories from item

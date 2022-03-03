@@ -1,6 +1,6 @@
 const ItemReducer = (state, action) => {
   switch (action.type) {
-    case "GET_ITEMS":
+    case "GET_ITEMS": // grabs all items regardless of category
       return {
         ...state,
         items: action.payload,

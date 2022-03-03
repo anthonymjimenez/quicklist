@@ -1,0 +1,9 @@
+1) When items fail to cast I should take any info that was found and ask users if they would like to upload the rest manually
+
+2) When items fail to connect need to timeout 
+
+3) Change lists to show newly added first
+
+4) Update styling
+
+5) Every user should have a preset list

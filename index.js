@@ -2,7 +2,7 @@
 // server.js
 var express = require("express");
 var app = express();
-var port = process.env.SERVER_PORT;
+var port = 7000;
 var cors = require("cors");
 var useDB = require("./config/useDB");
 
