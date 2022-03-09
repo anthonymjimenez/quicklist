@@ -1,5 +1,5 @@
 import { FormGroup, Label, Input } from "reactstrap";
-const CreateItem = ({ setUrl }) => (
+const CreateItem = ({ setUrl, url }) => (
   <FormGroup>
     <Label for="title">Url</Label>
     <Input
@@ -7,6 +7,7 @@ const CreateItem = ({ setUrl }) => (
       name="text"
       id="title"
       onChange={(e) => setUrl(e.target.value)}
+      value={url}
       placeholder="enter a url and let quicklist do the rest"
     />
   </FormGroup>

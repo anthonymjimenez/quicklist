@@ -7,11 +7,13 @@ import ErrorMessage from "../components/error-message";
 import CategoryIcons from "../containers/category-icons";
 import EditCategoryForm from "../forms/edit-category-form";
 import DeleteCategoryModal from "../modals/delete-category-modal";
+import Loading from "../components/loading";
 
 const Category = () => {
   let { id } = useParams();
-  let { categories, itemError, clearErrors, addItemsToCategory } =
+  let { categories, itemError, clearErrors, addItemsToCategory, loading } =
     useContext(ItemContext);
+
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");
   let [edit, setEdit] = useState(false);
@@ -36,6 +38,8 @@ const Category = () => {
     <>
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
+      {console.log("LOADING", loading)}
+      {loading && <Loading loading={loading} />}
       <h1>
         {" "}
         Category:{" "}

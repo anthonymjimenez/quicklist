@@ -7,9 +7,11 @@ const Create = () => {
 
   return (
     <>
-      <h3>Add new Item</h3>
+      <h3 className="mb-2">Add new Item</h3>
       <ItemForm />
-      <h3>Newly Updated </h3>
+      {newlyUpdatedCategories.length > 0 && (
+        <h3 className="mt-2">Newly Updated </h3>
+      )}
 
       <CategoryList categories={newlyUpdatedCategories} />
     </>

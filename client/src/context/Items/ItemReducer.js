@@ -15,12 +15,16 @@ const ItemReducer = (state, action) => {
         ...state,
         items: [action.payload, ...state.items],
       };
-    case "IS_LOADING": {
+    case "DONE_LOADING":
+      return {
+        ...state,
+        loading: null,
+      };
+    case "IS_LOADING":
       return {
         ...state,
         loading: true,
       };
-    }
 
     case "UPDATE_ITEMS":
       return {

@@ -91,6 +91,7 @@ export const ItemProvider = ({ children }) => {
 
   async function postItem(item) {
     try {
+      dispatch({ type: "IS_LOADING" });
       const response = await axios.post(`${serverUrl}/api/v1/items`, {
         ...item,
         headers: headers(),
@@ -115,6 +116,8 @@ export const ItemProvider = ({ children }) => {
         error.response.data.status,
         "POST_ITEM_ERROR"
       );
+    } finally {
+      dispatch({ type: "DONE_LOADING" });
     }
   }
 

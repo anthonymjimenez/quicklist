@@ -4,9 +4,10 @@ import CreateCategoryTab from "./create-category-tab";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { ItemContext } from "../context/Items/ItemContext";
 import ErrorMessage from "../components/error-message";
+import Loading from "../components/loading";
 const CreateFormTabs = () => {
   const [activeTab, setActiveTab] = useState("1");
-  const { itemError, clearErrors } = useContext(ItemContext);
+  const { itemError, clearErrors, loading } = useContext(ItemContext);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const CreateFormTabs = () => {
         </TabPane>
       </TabContent>
       <ErrorMessage message={message} />
+      <Loading loading={loading} />
     </div>
   );
 };
