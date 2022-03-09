@@ -48,6 +48,14 @@ exports.postItem = async (
   next
 ) => {
   try {
+    res.setTimeout(12000, function () {
+      console.log("Request has timed out.");
+      return res.status(408).json({
+        success: false,
+        error:
+          "Request has timed out. (Site is probably not compatible with Quicklist)",
+      });
+    });
     var validateItem = new Item({
       url: url,
       categories: categories,

@@ -52,6 +52,9 @@ export const ItemProvider = ({ children }) => {
 
   //items
   async function getItems(sub) {
+    // currently this functionality is not being utilized because
+    // items are fetched by category. This could be useful for a future
+    // search page or for adding existing items to category from category page.
     try {
       const response = await axios.get(
         `${serverUrl}/api/v1/items?user=${sub}`,
@@ -61,7 +64,7 @@ export const ItemProvider = ({ children }) => {
       );
       dispatch({
         type: "GET_ITEMS",
-        payload: response.data.results.reverse(),
+        payload: response.data.results,
       });
     } catch (error) {
       // returnErrors(error.response.data.error, error.response.data.status);
@@ -92,6 +95,7 @@ export const ItemProvider = ({ children }) => {
         ...item,
         headers: headers(),
       });
+      console.log(response);
       dispatch({
         type: "POST_ITEM",
         payload: response.data.results,
@@ -105,7 +109,7 @@ export const ItemProvider = ({ children }) => {
         payload: item.categories,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error, "ERROR");
       returnErrors(
         error.response.data.error,
         error.response.data.status,

@@ -1,9 +1,15 @@
-1) When items fail to cast I should take any info that was found and ask users if they would like to upload the rest manually
+1) When items fail to cast I should take any info that was 
+found and ask users if they would like to upload the rest 
+manually - Huge time commitment () )
 
-2) When items fail to connect need to timeout 
+2) When items fail to connect need to timeout  - DONE
 
-3) Change lists to show newly added first
+3) Change lists to show newly added first - DONE
+
+3.5) Loading should probably be clearer
 
 4) Update styling
 
 5) Every user should have a preset list
+
+) Implement speed dial in items page
