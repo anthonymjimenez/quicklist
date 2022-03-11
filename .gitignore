@@ -24,3 +24,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+## FOR HEROKU
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
