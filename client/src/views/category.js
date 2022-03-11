@@ -38,7 +38,6 @@ const Category = () => {
     <>
       <AddItemFromCategory category={category} clearErrors={clearErrors} />
       <ErrorMessage message={message} />
-      {console.log("LOADING", loading)}
       {loading && <Loading loading={loading} />}
       <h1>
         {" "}

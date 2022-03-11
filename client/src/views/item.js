@@ -6,7 +6,6 @@ import ItemShow from "../components/item-show";
 import ItemModal from "../modals/item-modal";
 import ItemIcons from "../containers/item-icons";
 import DeleteItemModal from "../modals/delete-item-modal";
-import ItemCategoriesList from "../containers/item-categories-list";
 
 const Item = () => {
   let { id } = useParams();
@@ -41,7 +40,11 @@ const Item = () => {
       {console.log(itemCategories)}
 
       {!edit ? (
-        <ItemShow item={item} loading={loading} />
+        <ItemShow
+          item={item}
+          loading={loading}
+          itemCategories={itemCategories}
+        />
       ) : (
         <EditItemForm item={item} setEdit={setEdit} />
       )}
@@ -59,7 +62,6 @@ const Item = () => {
           itemId={item._id}
         />
       )}
-      <ItemCategoriesList itemCategories={itemCategories} />
 
       <ItemIcons
         setEdit={setEdit}
