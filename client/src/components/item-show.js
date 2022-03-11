@@ -2,7 +2,9 @@ import React from "react";
 import { Media } from "reactstrap";
 import Loading from "../components/loading";
 import { IoPaperPlaneSharp } from "react-icons/io5";
-const ItemShow = ({ item, loading }) => {
+import ItemCategoriesList from "../containers/item-categories-list";
+
+const ItemShow = ({ item, loading, itemCategories }) => {
   return (
     <div>
       {loading ? (
@@ -26,13 +28,14 @@ const ItemShow = ({ item, loading }) => {
       <br />
       <div style={{ width: "90%" }}>
         <Media
-          style={{ width: "85%" }}
+          style={{ maxWidth: "500px", maxHeight: "500px" }}
           object
           src={item?.image}
           alt="Quicklist Icon"
         />
       </div>
-      <img src={item?.logo} alt="Item logo" /> {item?.hostname}
+      <img src={item?.logo} alt="Item logo" />
+      <ItemCategoriesList itemCategories={itemCategories} />{" "}
       <p>{item?.description}</p>
     </div>
   );
