@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var port = process.env.SERVER_PORT;
 var cors = require("cors");
-var { useDB } = require("./configDB");
+var useDB = require("./configDB/useDB");
 
 require("dotenv").config();
 
