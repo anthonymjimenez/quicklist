@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var port = process.env.SERVER_PORT;
 var cors = require("cors");
-var useDB = require("./config/useDB");
+var { useDB } = require("./config");
 
 require("dotenv").config();
 
@@ -13,7 +13,7 @@ if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
 }
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://listquick.netlify.app/",
 };
 
 app.use(cors(corsOptions));
