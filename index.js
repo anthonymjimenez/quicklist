@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var port = process.env.SERVER_PORT;
+var port = process.env.PORT || 7000;
 var cors = require("cors");
 var useDB = require("./configDB/useDB");
 
