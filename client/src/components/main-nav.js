@@ -33,7 +33,7 @@ const MainNav = () => (
       className="nav-link"
       activeClassName="router-link-exact-active"
     >
-      Quick Lists
+      Lists
     </NavLink>
     {/* add about page  */}
   </div>
