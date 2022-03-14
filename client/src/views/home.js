@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Media } from "reactstrap";
 import ItemCard from "../components/item-card";
 import PublicItem from "../forms/public-item";
 import { ItemContext } from "../context/Items/ItemContext";
+import ErrorMessage from "../components/error-message";
+import Loading from "../components/loading";
 
 const Home = () => {
-  let { publicItem } = useContext(ItemContext);
+  let { publicItem, itemError, loading } = useContext(ItemContext);
+  let [message, setMessage] = useState(false);
+  useEffect(() => {
+    itemError.id === "PUBLIC_ERROR"
+      ? setMessage(itemError.message)
+      : setMessage(false);
 
+    console.log(itemError);
+  }, [itemError]);
   return (
     <div className="home-page">
       <Media
@@ -17,6 +26,9 @@ const Home = () => {
       <h3>Create shopping list seamlessly with Quicklist</h3>
       <PublicItem />
       <br />
+      {loading && <Loading loading={loading} />}
+      {}
+      <ErrorMessage message={message} />
       {publicItem && (
         <>
           <h4> Create an Account to start saving items! </h4>

@@ -5,11 +5,12 @@ import CreateItem from "../form-components/create-item";
 
 const PublicItem = () => {
   let [url, setUrl] = useState("");
-  const { publicItem, getPublicItem } = useContext(ItemContext);
+  const { publicItem, getPublicItem, clearErrors } = useContext(ItemContext);
 
   return (
     <Form
       onSubmit={(e) => {
+        clearErrors();
         e.preventDefault();
         getPublicItem({ url: url });
       }}

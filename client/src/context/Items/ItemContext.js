@@ -74,6 +74,7 @@ export const ItemProvider = ({ children }) => {
 
   async function getPublicItem(item) {
     try {
+      dispatch({ type: "IS_LOADING" });
       const response = await axios.post(`${serverUrl}/api/v1/items/test`, {
         ...item,
         headers: {
@@ -85,7 +86,13 @@ export const ItemProvider = ({ children }) => {
         payload: response.data.results,
       });
     } catch (error) {
-      console.error(error);
+      returnErrors(
+        error.response.data.error,
+        error.response.data.status,
+        "PUBLIC_ERROR"
+      );
+    } finally {
+      dispatch({ type: "DONE_LOADING" });
     }
   }
 
