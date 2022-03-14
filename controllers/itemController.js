@@ -92,8 +92,13 @@ exports.postItem = async (
 
 exports.publicItem = async ({ body: { url } }, res, next) => {
   try {
-    console.log(url);
-
+    res.setTimeout(12000, function () {
+      console.log("Request has timed out.");
+      return res.status(408).json({
+        success: false,
+        error: "Sorry but this site isn't currently compatible with Quicklist!",
+      });
+    });
     if (!validUrl.isUri(url)) {
       return res.status(400).json({
         error: true,
