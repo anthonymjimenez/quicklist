@@ -11,7 +11,9 @@ function NavBar() {
   return (
     <div className="nav-container mb-3">
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Quick List</NavbarBrand>
+        <NavbarBrand className="m-2" href="/">
+          Quick List
+        </NavbarBrand>
         <NavbarToggler
           onClick={() => {
             setIsOpen(!isOpen);
