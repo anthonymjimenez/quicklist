@@ -23,7 +23,11 @@ const Home = () => {
         src="https://i.imgur.com/jG1INcW.png"
         alt="Quicklist Icon"
       />
-      <h3>Create shopping list seamlessly with Quicklist</h3>
+      <h2 className="mb-2">
+        Use web scraping technology to fetch and save descriptive details using
+        nothing but URLS!
+      </h2>
+
       <PublicItem />
       <br />
       {loading && <Loading loading={loading} />}
@@ -31,7 +35,11 @@ const Home = () => {
       <ErrorMessage message={message} />
       {publicItem && (
         <>
-          <h4> Create an Account to start saving items! </h4>
+          <h4>
+            {" "}
+            Create an Account to start creating shopping lists seamlessly with
+            Quicklist{" "}
+          </h4>
           <ItemCard item={publicItem} isPublic={true} />{" "}
         </>
       )}

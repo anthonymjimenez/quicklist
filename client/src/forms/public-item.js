@@ -17,7 +17,7 @@ const PublicItem = () => {
     >
       <CreateItem setUrl={setUrl} url={url} />
       <Button
-        className="m-1"
+        className="m-2"
         onClick={() =>
           setUrl(
             "https://www.nike.com/t/pegasus-trail-3-gore-tex-mens-running-shoes-HG005k/DR0137-200"
