@@ -31,7 +31,7 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
           Auto update item
         </Tooltip>
         <Button
-          className="mr-2"
+          className="m-1"
           onClick={() => {
             // autoUpdate(true)
             autoUpdateItem(item._id);
@@ -50,7 +50,7 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
           Edit item
         </Tooltip>
         <Button
-          className="mr-2"
+          className="m-1"
           onClick={() => {
             setEdit((edit) => !edit);
           }}
@@ -68,7 +68,7 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
           Add/Remove item from categories
         </Tooltip>
         <Button
-          className="mr-2"
+          className="m-1"
           onClick={() => {
             setItemModal(true);
           }}
@@ -86,7 +86,7 @@ const ItemIcons = ({ setEdit, setItemModal, setDeleteItemModal, item }) => {
           Delete item
         </Tooltip>
         <Button
-          className="mr-2"
+          className="m-1"
           onClick={() => {
             setDeleteItemModal(true);
           }}

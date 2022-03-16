@@ -17,7 +17,7 @@ const PublicItem = () => {
     >
       <CreateItem setUrl={setUrl} url={url} />
       <Button
-        className="mr-5"
+        className="m-1"
         onClick={() =>
           setUrl(
             "https://www.nike.com/t/pegasus-trail-3-gore-tex-mens-running-shoes-HG005k/DR0137-200"
@@ -27,7 +27,7 @@ const PublicItem = () => {
         {" "}
         Use Example URL{" "}
       </Button>
-      <Button>Submit</Button>
+      <Button className="m-1">Submit</Button>
       {console.log("public", publicItem)}
     </Form>
   );

@@ -20,7 +20,7 @@ function NavBar() {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <MainNav />
-            <div className="mr-5" />
+            <div className="m-1" />
             <AuthNav />
           </Nav>
         </Collapse>
