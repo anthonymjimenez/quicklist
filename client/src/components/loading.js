@@ -1,7 +1,5 @@
 import React from "react";
 import { Spinner } from "reactstrap";
-const loadingImg =
-  "https://cdn.auth0.com/blog/auth0-react-sample/assets/loading.svg";
 
 const Loading = ({ loading }) => (
   <>
