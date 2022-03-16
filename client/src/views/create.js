@@ -1,6 +1,6 @@
 import ItemForm from "../forms/create-form-tabs";
 import { ItemContext } from "../context/Items/ItemContext";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CategoryList from "../containers/category-list";
 const Create = () => {
   const { newlyUpdatedCategories } = useContext(ItemContext);

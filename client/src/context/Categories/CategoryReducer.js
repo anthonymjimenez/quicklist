@@ -1,5 +1,3 @@
-import ItemCategoriesModalTabs from "../../forms/item-categories-modal-tabs";
-
 const CategoryReducer = (state, action) => {
   switch (action.type) {
     case "FIND_UPDATED_CATEGORIES":
