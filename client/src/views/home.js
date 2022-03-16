@@ -24,7 +24,7 @@ const Home = () => {
         alt="Quicklist Icon"
       />
       <h2 className="mb-2">
-        Use web scraping technology to fetch and save itemsx using nothing but
+        Use web scraping technology to fetch and save items using nothing but
         URLS!
       </h2>
 
