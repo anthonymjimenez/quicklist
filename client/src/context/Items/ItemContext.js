@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import ItemReducer from "./ItemReducer";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";

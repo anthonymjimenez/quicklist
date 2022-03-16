@@ -11,8 +11,7 @@ import Loading from "../components/loading";
 
 const Category = () => {
   let { id } = useParams();
-  let { categories, itemError, clearErrors, addItemsToCategory, loading } =
-    useContext(ItemContext);
+  let { categories, itemError, clearErrors, loading } = useContext(ItemContext);
 
   let [category, setCategory] = useState([]);
   let [message, setMessage] = useState("");

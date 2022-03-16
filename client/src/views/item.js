@@ -33,6 +33,7 @@ const Item = () => {
     setItemCategories(
       categories.filter((cat) => item?.categories?.includes(cat._id))
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, id, item]);
 
   return (
