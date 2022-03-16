@@ -20,6 +20,7 @@ export const ItemContext = createContext(initialState);
 export const ItemProvider = ({ children }) => {
   const { getAccessTokenSilently } = useAuth0();
   const serverUrl = process.env.REACT_APP_SERVER_URL;
+  console.log(serverUrl);
   const [state, dispatch] = useReducer(ItemReducer, initialState);
   const [errState, errDispatch] = useReducer(ErrorReducer, errorState);
   const [categoryState, categoryDispatch] = useReducer(

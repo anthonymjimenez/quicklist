@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ItemContext } from "./context/Items/ItemContext";
-import "./App.css";
+import "./index.css";
 import NavBar from "./components/nav-bar";
 import Loading from "./components/loading";
 import Footer from "./components/footer";
