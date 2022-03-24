@@ -10,7 +10,6 @@ const ItemList = ({ items, isEdit = false }) => {
           <ItemCard item={item} />
         </>
       ))}
-      )
     </>
   );
 };
