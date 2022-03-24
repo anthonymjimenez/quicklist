@@ -14,5 +14,11 @@ code {
 
 #app {
   background-color: #d3d3d372;
-  height: 100%;
+  max-height: 2000px !important;
+}
+
+@media only screen and (min-height: 1180px) {
+  #app {
+    min-height: 1300px !important;
+  }
 }
