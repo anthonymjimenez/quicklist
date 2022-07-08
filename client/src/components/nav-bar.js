@@ -10,7 +10,7 @@ function NavBar() {
 
   return (
     <div className="nav-container mb-3">
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" bg="primary" light expand="md">
         <NavbarBrand className="m-2" href="/">
           Quick List
         </NavbarBrand>
